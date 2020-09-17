@@ -13,5 +13,11 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.SourcesDirectory)/Example/Myartifact/'
-    ArtifactName: 'Myartifact'
+    ArtifactName: 'Myartifact - BuildArtifact'
     publishLocation: 'Container'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.SourcesDirectory)/Example/Myartifact/'
+    artifact: 'Myartifact - PipelineArtifact'
+    publishLocation: 'pipeline'
