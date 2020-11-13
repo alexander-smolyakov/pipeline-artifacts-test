@@ -12,12 +12,12 @@ pool:
 steps:
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/Example/Myartifact/'
+    PathtoPublish: '$(Build.SourcesDirectory)'
     ArtifactName: 'bin'
     publishLocation: 'Container'
 
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Build.SourcesDirectory)/Example/Myartifact/'
-    artifact: 'Myartifact - PipelineArtifact'
-    publishLocation: 'pipeline'
+# - task: PublishPipelineArtifact@1
+#   inputs:
+#     targetPath: '$(Build.SourcesDirectory)/Example/Myartifact/'
+#     artifact: 'Myartifact - PipelineArtifact'
+#     publishLocation: 'pipeline'
