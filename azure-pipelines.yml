@@ -9,7 +9,7 @@ trigger:
 pool:
   name: 'Self-hosted pool'
   demands:
-  - Agent.Name -equals "Agent 2"
+  - Agent.Name -equals Agent 2
 
 steps:
 - task: PublishBuildArtifacts@1
