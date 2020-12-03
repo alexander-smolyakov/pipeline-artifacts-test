@@ -7,7 +7,9 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Self-hosted pool'
+  demands:
+  - Agent.Name -equal "Agent 2"
 
 steps:
 - task: PublishBuildArtifacts@1
@@ -15,6 +17,16 @@ steps:
     PathtoPublish: '$(Build.SourcesDirectory)'
     ArtifactName: 'test'
     publishLocation: 'Container'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
+    pipeline: '21'
+    buildVersionToDownload: 'latest'
+    downloadType: 'single'
+    artifactName: 'test'
+    downloadPath: '$(System.ArtifactsDirectory)'
 
 # - task: PublishPipelineArtifact@1
 #   inputs:
