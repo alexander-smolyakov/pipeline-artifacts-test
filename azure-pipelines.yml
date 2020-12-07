@@ -50,7 +50,7 @@ steps:
     pipeline: '21'
     buildVersionToDownload: 'latest'
     downloadType: 'single'
-    artifactName: 'test'
+    artifactName: 'testZip'
     downloadPath: '$(System.ArtifactsDirectory)'
 
 # - task: PublishPipelineArtifact@1
