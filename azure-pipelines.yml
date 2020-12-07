@@ -18,6 +18,31 @@ steps:
     ArtifactName: 'test'
     publishLocation: 'Container'
 
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
+    pipeline: '21'
+    buildVersionToDownload: 'latest'
+    downloadType: 'single'
+    artifactName: 'test'
+    downloadPath: '$(System.ArtifactsDirectory)'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    ArtifactName: 'testZip'
+    publishLocation: 'Container'
+
 - task: DownloadBuildArtifacts@0
   inputs:
     buildType: 'specific'
