@@ -25,7 +25,6 @@ steps:
     project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
     pipeline: '21'
     buildVersionToDownload: 'latest'
-    allowPartiallySucceededBuilds: true
     downloadType: 'single'
     artifactName: 'test'
     downloadPath: '$(System.ArtifactsDirectory)'
@@ -49,9 +48,9 @@ steps:
     buildType: 'specific'
     project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
     pipeline: '21'
-    specificBuildWithTriggering: true
     buildVersionToDownload: 'latest'
-    downloadType: 'specific'
+    downloadType: 'single'
+    artifactName: 'testZip'
     downloadPath: '$(System.ArtifactsDirectory)'
 
 # - task: PublishPipelineArtifact@1
