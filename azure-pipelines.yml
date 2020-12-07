@@ -34,12 +34,12 @@ steps:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
     includeRootFolder: false
     archiveType: 'zip'
-    archiveFile: '$(Agent.Temp)/$(Build.BuildId).zip'
+    archiveFile: '$(Agent.TempDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Agent.Temp)/$(Build.BuildId).zip'
+    PathtoPublish: '$(Agent.TempDirectory)/$(Build.BuildId).zip'
     ArtifactName: 'testZip'
     publishLocation: 'Container'
 
