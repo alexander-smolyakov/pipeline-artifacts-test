@@ -104,13 +104,11 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/6_CFiles/'
 
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download *.c and *.h files'
+  displayName: 'Download all files'
   inputs:
     buildType: 'current'
     downloadType: 'specific'
-    itemPattern: |
-      Artifact_SourceFiles/*.c
-      Artifact_HeaderFiles/*.h
+    itemPattern: '**'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
 
 - task: PowerShell@2
