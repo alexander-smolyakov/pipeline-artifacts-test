@@ -20,6 +20,7 @@ steps:
       mkdir TestCases
       cd TestCases
       
+      mkdir Artifact_A
       touch Artifact_A/sample_1.c
       touch Artifact_A/sample_2.c
 
