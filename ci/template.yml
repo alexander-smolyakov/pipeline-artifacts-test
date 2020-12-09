@@ -4,25 +4,49 @@
 # https://aka.ms/yaml
 
 steps:
-- task: Bash@3
+- task: PowerShell@2
   displayName: 'Generate files for artifacts'
   inputs:
     targetType: 'inline'
     script: |
-      mkdir TestCases
-      cd TestCases
-      
-      mkdir SourceFiles
-      touch SourceFiles/sample_1.c
-      touch SourceFiles/sample_2.c
-      touch SourceFiles/sample_3.cpp
-      touch SourceFiles/sample_4.cpp
+      New-Item -ItemType Directory -Path "TestCases"
+      cd SourceFiles
 
-      mkdir HeaderFiles
-      touch HeaderFiles/sample_1.h
-      touch HeaderFiles/sample_2.h
-      touch HeaderFiles/sample_3.hpp
-      touch HeaderFiles/sample_4.hpp
+      New-Item -ItemType Directory -Path "SourceFiles"
+      cd SourceFiles
+      New-Item -Name "sample_1.c" -ItemType "file"
+      New-Item -Name "sample_2.c" -ItemType "file"
+      New-Item -Name "sample_3.cpp" -ItemType "file"
+      New-Item -Name "sample_4.cpp" -ItemType "file"
+
+      cd ..
+
+      New-Item -ItemType Directory -Path "HeaderFiles"
+      cd HeaderFiles
+      New-Item -Name "sample_1.h" -ItemType "file"
+      New-Item -Name "sample_2.h" -ItemType "file"
+      New-Item -Name "sample_3.hpp" -ItemType "file"
+      New-Item -Name "sample_4.hpp" -ItemType "file"
+
+# - task: Bash@3
+#   displayName: 'Generate files for artifacts'
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#       mkdir TestCases
+#       cd TestCases
+      
+#       mkdir SourceFiles
+#       touch SourceFiles/sample_1.c
+#       touch SourceFiles/sample_2.c
+#       touch SourceFiles/sample_3.cpp
+#       touch SourceFiles/sample_4.cpp
+
+#       mkdir HeaderFiles
+#       touch HeaderFiles/sample_1.h
+#       touch HeaderFiles/sample_2.h
+#       touch HeaderFiles/sample_3.hpp
+#       touch HeaderFiles/sample_4.hpp
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish source files'

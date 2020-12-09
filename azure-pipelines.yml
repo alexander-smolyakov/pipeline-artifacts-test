@@ -1,29 +1,31 @@
 trigger:
 - master
 
-# pool:
-#   vmImage: ubuntu-latest
-#   name: 'Self-hosted pool'
-#   demands:
-#   - Agent.Name -equals Agent 2
 jobs:
 - job: 'HostedWindows'
   pool:
-    vmImage: windows-latest
-  #condition: and(succeeded())
-  steps:
-  - template: ci/template.yml
+    name: 'Self-hosted pool'
+    demands:
+    - Agent.Name -equals Agent 2
 
-- job: 'HostedMacOS'
-  pool:
-    vmImage: macOS-latest
-  #condition: and(succeeded())
-  steps:
-  - template: ci/template.yml
+# jobs:
+# - job: 'HostedWindows'
+#   pool:
+#     vmImage: windows-latest
+#   #condition: and(succeeded())
+#   steps:
+#   - template: ci/template.yml
 
-- job: 'HostedUbuntu'
-  pool:
-    vmImage: ubuntu-latest
-  #condition: and(succeeded())
-  steps:
-  - template: ci/template.yml
+# - job: 'HostedMacOS'
+#   pool:
+#     vmImage: macOS-latest
+#   #condition: and(succeeded())
+#   steps:
+#   - template: ci/template.yml
+
+# - job: 'HostedUbuntu'
+#   pool:
+#     vmImage: ubuntu-latest
+#   #condition: and(succeeded())
+#   steps:
+#   - template: ci/template.yml
