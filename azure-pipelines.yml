@@ -113,7 +113,7 @@ steps:
       Artifact_HeaderFiles/*.h
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
 
-- task: Bash@3
+- task: PowerShell@2
   inputs:
     targetType: 'inline'
     script: |
