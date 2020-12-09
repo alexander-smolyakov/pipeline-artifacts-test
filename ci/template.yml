@@ -118,6 +118,15 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
   
 - pwsh: |
-    cd "$(System.ArtifactsDirectory)"
+    cd "$(System.ArtifactsDirectory)/TestCases"
+    
+    cd "1_OnlySourceFiles/"
+    $expectedFiles = Get-ChildItem -Recurse -path "$(Build.SourcesDirectory)/TestCases/SourceFiles"
+    $actualFiles = Get-ChildItem -Recurse -path "Artifact_SourceFiles"
+    Compare-Object -ReferenceObject $expectedFiles -DifferenceObject $actualFiles
+
+    cd ..
+
+
     Get-ChildItem -Recurse -Directory
   displayName: 'Show TestCases folder'
