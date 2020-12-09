@@ -7,13 +7,13 @@ trigger:
 - master
 
 pool:
-  vmImage: windows-latest
-  # name: 'Self-hosted pool'
-  # demands:
-  # - Agent.Name -equals Agent 2
+  #vmImage: windows-latest
+  name: 'Self-hosted pool'
+  demands:
+  - Agent.Name -equals Agent 2
 
 steps:
-- task: Bash@3
+- task: PowerShell@2
   inputs:
     targetType: 'inline'
     script: |
@@ -34,6 +34,28 @@ steps:
 
       pwd
       ls -la
+
+# - task: Bash@3
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#       mkdir TestCases
+#       cd TestCases
+      
+#       mkdir SourceFiles
+#       touch SourceFiles/sample_1.c
+#       touch SourceFiles/sample_2.c
+#       touch SourceFiles/sample_3.cpp
+#       touch SourceFiles/sample_4.cpp
+
+#       mkdir HeaderFiles
+#       touch HeaderFiles/sample_1.h
+#       touch HeaderFiles/sample_2.h
+#       touch HeaderFiles/sample_3.hpp
+#       touch HeaderFiles/sample_4.hpp
+
+#       pwd
+#       ls -la
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish source files'
