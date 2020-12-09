@@ -17,6 +17,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      mkdir TestCases
       mkdir TestCases/Artifact_A
       touch TestCases/Artifact_A/sample_1.c
       touch TestCases/Artifact_A/sample_2.c
