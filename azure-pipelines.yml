@@ -50,6 +50,9 @@ steps:
     ArtifactName: 'Artifact_HeaderFiles'
     publishLocation: 'Container'
 
+# Test case #1
+# Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/
+# The download folder should contain only *.c and *.cpp files
 - task: DownloadBuildArtifacts@0
   displayName: 'Download only source files'
   inputs:
@@ -58,6 +61,9 @@ steps:
     artifactName: 'Artifact_SourceFiles'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/'
 
+# Test case #2
+# Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/
+# The download folder should contain only *.h and *.hpp files
 - task: DownloadBuildArtifacts@0
   displayName: 'Download only header files'
   inputs:
@@ -66,6 +72,9 @@ steps:
     artifactName: 'Artifact_SourceFiles'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/'
 
+# Test case #3
+# Download all *.c files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/
+# The download folder should contain only *.c files
 - task: DownloadBuildArtifacts@0
   displayName: 'Download only *.c files'
   inputs:
@@ -75,6 +84,9 @@ steps:
     itemPattern: 'Artifact_SourceFiles/*.c'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/'
 
+# Test case #4
+# Download all *.hpp files from Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/4_OnlyHPPFiles/
+# The download folder should contain only *.hpp files
 - task: DownloadBuildArtifacts@0
   displayName: 'Download only *.hpp files'
   inputs:
@@ -84,6 +96,9 @@ steps:
     itemPattern: 'Artifact_HeaderFiles/*.hpp'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/4_OnlyHPPFiles/'
 
+# Test case #5
+# Download all *.cpp and *.hpp files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/5_CppFiles/
+# The download folder should contain only *.cpp and *.hpp files
 - task: DownloadBuildArtifacts@0
   displayName: 'Download *.cpp and *.hpp files'
   inputs:
@@ -94,6 +109,9 @@ steps:
       Artifact_HeaderFiles/*.hpp
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/5_CppFiles/'
 
+# Test case #6
+# Download all *.c and *.h files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/6_CFiles/
+# The download folder should contain only *.c and *.h files
 - task: DownloadBuildArtifacts@0
   displayName: 'Download *.c and *.h files'
   inputs:
@@ -104,6 +122,9 @@ steps:
       Artifact_HeaderFiles/*.h
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/6_CFiles/'
 
+# Test case #7
+# Download all files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/7_AllFiles/
+# The download folder should contain all files from Artifact_SourceFiles and Artifact_HeaderFiles
 - task: DownloadBuildArtifacts@0
   displayName: 'Download all files'
   inputs:
