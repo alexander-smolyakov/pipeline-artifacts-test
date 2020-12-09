@@ -31,7 +31,7 @@ steps:
     buildType: 'current'
     downloadType: 'single'
     artifactName: 'test'
-    itemPattern: '*.c'
+    itemPattern: 'test/*.c'
     downloadPath: '$(System.ArtifactsDirectory)/onlyCFiles'
 
 - task: DownloadBuildArtifacts@0
