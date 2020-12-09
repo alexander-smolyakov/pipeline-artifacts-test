@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: windows-lastest
+  vmImage: windows-latest
   # name: 'Self-hosted pool'
   # demands:
   # - Agent.Name -equals Agent 2
