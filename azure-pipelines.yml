@@ -70,7 +70,7 @@ steps:
     pipeline: '21'
     buildVersionToDownload: 'latest'
     downloadType: 'specific'
-    itemPattern: '*.zip'
+    itemPattern: '*.c'
     downloadPath: '$(System.ArtifactsDirectory)/pattern/'
 
 # - task: PublishPipelineArtifact@1
