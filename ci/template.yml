@@ -18,7 +18,7 @@ steps:
       New-Item -Name "sample_2.h" -ItemType "file"
       New-Item -Name "sample_3.hpp" -ItemType "file"
       New-Item -Name "sample_4.hpp" -ItemType "file"
-    displayName: 'Generate files for artifacts'
+  displayName: 'Generate files for artifacts'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish source files'
