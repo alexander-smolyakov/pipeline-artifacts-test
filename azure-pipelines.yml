@@ -29,19 +29,29 @@ steps:
     artifactName: 'test'
     downloadPath: '$(System.ArtifactsDirectory)'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Agent.TempDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+# - task: ArchiveFiles@2
+#   inputs:
+#     rootFolderOrFile: '$(Build.SourcesDirectory)'
+#     includeRootFolder: false
+#     archiveType: 'zip'
+#     archiveFile: '$(Agent.TempDirectory)/$(Build.BuildId).zip'
+#     replaceExistingArchive: true
 
-- task: PublishBuildArtifacts@1
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(Agent.TempDirectory)/$(Build.BuildId).zip'
+#     ArtifactName: 'testZip'
+#     publishLocation: 'Container'
+
+- task: DownloadBuildArtifacts@0
   inputs:
-    PathtoPublish: '$(Agent.TempDirectory)/$(Build.BuildId).zip'
-    ArtifactName: 'testZip'
-    publishLocation: 'Container'
+    buildType: 'specific'
+    project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
+    pipeline: '21'
+    buildVersionToDownload: 'latest'
+    downloadType: 'specific'
+    itemPattern: '*.c'
+    downloadPath: '$(System.ArtifactsDirectory)/pattern/'
 
 - task: DownloadBuildArtifacts@0
   inputs:
