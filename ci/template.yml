@@ -10,7 +10,7 @@ steps:
     targetType: 'inline'
     script: |
       New-Item -ItemType Directory -Path "TestCases"
-      cd SourceFiles
+      cd TestCases
 
       New-Item -ItemType Directory -Path "SourceFiles"
       cd SourceFiles
