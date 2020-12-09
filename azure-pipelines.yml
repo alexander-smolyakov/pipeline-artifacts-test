@@ -20,53 +20,85 @@ steps:
       mkdir TestCases
       cd TestCases
       
-      mkdir Artifact_A
-      touch Artifact_A/sample_1.c
-      touch Artifact_A/sample_2.c
+      mkdir SourceFiles
+      touch SourceFiles/sample_1.c
+      touch SourceFiles/sample_2.c
+      touch SourceFiles/sample_3.cpp
+      touch SourceFiles/sample_4.cpp
 
-      mkdir Artifact_B
-      touch Artifact_B/sample_3.c
-      touch Artifact_B/sample_4.c
+      mkdir HeaderFiles
+      touch HeaderFiles/sample_1.h
+      touch HeaderFiles/sample_2.h
+      touch HeaderFiles/sample_3.hpp
+      touch HeaderFiles/sample_4.hpp
 
       pwd
       ls -la
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish test build artifact'
+  displayName: 'Publish source files'
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)\TestCases/Artifact_A'
-    ArtifactName: 'Artifact_A'
+    PathtoPublish: '$(Build.SourcesDirectory)/TestCases/SourceFiles'
+    ArtifactName: 'Artifact_SourceFiles'
     publishLocation: 'Container'
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish test build artifact'
+  displayName: 'Publish header files'
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)\TestCases/Artifact_B'
-    ArtifactName: 'Artifact_B'
+    PathtoPublish: '$(Build.SourcesDirectory)/TestCases/HeaderFiles'
+    ArtifactName: 'Artifact_HeaderFiles'
     publishLocation: 'Container'
 
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download all artifact items'
+  displayName: 'Download only source files'
   inputs:
     buildType: 'current'
     downloadType: 'single'
-    artifactName: 'Artifact_A'
-    downloadPath: '$(System.ArtifactsDirectory)/Artifact_A/'
+    artifactName: 'Artifact_SourceFiles'
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase1/OnlySourceFiles/'
 
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download only *.c filles from nested folder'
+  displayName: 'Download only header files'
   inputs:
     buildType: 'current'
     downloadType: 'single'
-    artifactName: 'Artifact_B'
-    itemPattern: 'Artifact_B/*.c'
-    downloadPath: '$(System.ArtifactsDirectory)/Artifact_B/onlyCFile/'
+    artifactName: 'Artifact_SourceFiles'
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase2/OnlyHeaderFiles/'
 
 - task: DownloadBuildArtifacts@0
+  displayName: 'Download only *.c files'
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'Artifact_SourceFiles'
+    itemPattern: 'Artifact_SourceFiles/*.c'
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase3/OnlyCFiles/'
+
+- task: DownloadBuildArtifacts@0
+  displayName: 'Download only *.hpp files'
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'Artifact_HeaderFiles'
+    itemPattern: 'Artifact_HeaderFiles/*.hpp'
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase4/OnlyHPPFiles/'
+
+- task: DownloadBuildArtifacts@0
+  displayName: 'Download *.cpp and *.hpp files'
   inputs:
     buildType: 'current'
     downloadType: 'specific'
     itemPattern: |
-      Artifact_A/*.c
-      Artifact_B/*.c
-    downloadPath: '$(System.ArtifactsDirectory)/onlyCFile/'
+      Artifact_SourceFiles/*.cpp
+      Artifact_HeaderFiles/*.hpp
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase5/CppFiles/'
+
+- task: DownloadBuildArtifacts@0
+  displayName: 'Download *.c and *.h files'
+  inputs:
+    buildType: 'current'
+    downloadType: 'specific'
+    itemPattern: |
+      Artifact_SourceFiles/*.c
+      Artifact_HeaderFiles/*.h
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase5/CFiles/'
