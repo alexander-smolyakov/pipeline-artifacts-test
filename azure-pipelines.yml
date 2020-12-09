@@ -17,13 +17,16 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      mkdir $(Agent.TempDirectory)/Artifact_A
-      touch $(Agent.TempDirectory)/Artifact_A/sample_1.c
-      touch $(Agent.TempDirectory)/Artifact_A/sample_2.c
+      mkdir Artifact_A
+      touch Artifact_A/sample_1.c
+      touch Artifact_A/sample_2.c
 
-      mkdir $(Agent.TempDirectory)/Artifact_B
-      touch $(Agent.TempDirectory)/Artifact_B/sample_3.c
-      touch $(Agent.TempDirectory)/Artifact_B/sample_4.c
+      mkdir Artifact_B
+      touch Artifact_B/sample_3.c
+      touch Artifact_B/sample_4.c
+
+      pwd
+      ls -la
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish test build artifact'
