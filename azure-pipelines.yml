@@ -118,7 +118,7 @@ steps:
       cd $(System.ArtifactsDirectory)/
       ls -R
 
-- task: PowerShell@2
+- task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
