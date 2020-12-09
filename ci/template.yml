@@ -130,6 +130,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      echo $(System.ArtifactsDirectory)
-      cd $(System.ArtifactsDirectory)
+      echo "$(System.ArtifactsDirectory)"
+      cd "$(System.ArtifactsDirectory)"
       Get-ChildItem -Recurse -Directory
