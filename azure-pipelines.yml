@@ -7,10 +7,10 @@ trigger:
 - master
 
 pool:
-  #vmImage: windows-latest
-  name: 'Self-hosted pool'
-  demands:
-  - Agent.Name -equals Agent 2
+  vmImage: windows-latest
+  # name: 'Self-hosted pool'
+  # demands:
+  # - Agent.Name -equals Agent 2
 
 steps:
 - task: Bash@3
