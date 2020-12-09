@@ -55,7 +55,7 @@ steps:
     buildType: 'current'
     downloadType: 'single'
     artifactName: 'Artifact_SourceFiles'
-    downloadPath: '$(System.ArtifactsDirectory)/TestCase1/OnlySourceFiles/'
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase1_OnlySourceFiles/'
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download only header files'
@@ -63,7 +63,7 @@ steps:
     buildType: 'current'
     downloadType: 'single'
     artifactName: 'Artifact_SourceFiles'
-    downloadPath: '$(System.ArtifactsDirectory)/TestCase2/OnlyHeaderFiles/'
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase2_OnlyHeaderFiles/'
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download only *.c files'
@@ -72,7 +72,7 @@ steps:
     downloadType: 'single'
     artifactName: 'Artifact_SourceFiles'
     itemPattern: 'Artifact_SourceFiles/*.c'
-    downloadPath: '$(System.ArtifactsDirectory)/TestCase3/OnlyCFiles/'
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase3_OnlyCFiles/'
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download only *.hpp files'
@@ -81,7 +81,7 @@ steps:
     downloadType: 'single'
     artifactName: 'Artifact_HeaderFiles'
     itemPattern: 'Artifact_HeaderFiles/*.hpp'
-    downloadPath: '$(System.ArtifactsDirectory)/TestCase4/OnlyHPPFiles/'
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase4_OnlyHPPFiles/'
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download *.cpp and *.hpp files'
@@ -91,7 +91,7 @@ steps:
     itemPattern: |
       Artifact_SourceFiles/*.cpp
       Artifact_HeaderFiles/*.hpp
-    downloadPath: '$(System.ArtifactsDirectory)/TestCase5/CppFiles/'
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase5_CppFiles/'
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download *.c and *.h files'
@@ -101,4 +101,21 @@ steps:
     itemPattern: |
       Artifact_SourceFiles/*.c
       Artifact_HeaderFiles/*.h
-    downloadPath: '$(System.ArtifactsDirectory)/TestCase5/CFiles/'
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase6_CFiles/'
+
+- task: DownloadBuildArtifacts@0
+  displayName: 'Download *.c and *.h files'
+  inputs:
+    buildType: 'current'
+    downloadType: 'specific'
+    itemPattern: |
+      Artifact_SourceFiles/*.c
+      Artifact_HeaderFiles/*.h
+    downloadPath: '$(System.ArtifactsDirectory)/TestCase7_AllFiles/'
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      cd $(System.ArtifactsDirectory)
+      ls -a1
