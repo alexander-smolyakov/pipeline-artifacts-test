@@ -28,26 +28,6 @@ steps:
       New-Item -Name "sample_3.hpp" -ItemType "file"
       New-Item -Name "sample_4.hpp" -ItemType "file"
 
-# - task: Bash@3
-#   displayName: 'Generate files for artifacts'
-#   inputs:
-#     targetType: 'inline'
-#     script: |
-#       mkdir TestCases
-#       cd TestCases
-      
-#       mkdir SourceFiles
-#       touch SourceFiles/sample_1.c
-#       touch SourceFiles/sample_2.c
-#       touch SourceFiles/sample_3.cpp
-#       touch SourceFiles/sample_4.cpp
-
-#       mkdir HeaderFiles
-#       touch HeaderFiles/sample_1.h
-#       touch HeaderFiles/sample_2.h
-#       touch HeaderFiles/sample_3.hpp
-#       touch HeaderFiles/sample_4.hpp
-
 - task: PublishBuildArtifacts@1
   displayName: 'Publish source files'
   inputs:
@@ -150,5 +130,5 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      cd $(System.ArtifactsDirectory)/
-      ls -R
+      cd $(System.ArtifactsDirectory)
+      Get-ChildItem -Recurse -Directory
