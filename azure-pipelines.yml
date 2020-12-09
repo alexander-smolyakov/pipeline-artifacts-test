@@ -17,13 +17,13 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      mkdir Artifact_A
-      touch Artifact_A/sample_1.c
-      touch Artifact_A/sample_2.c
+      mkdir TestCases/Artifact_A
+      touch TestCases/Artifact_A/sample_1.c
+      touch TestCases/Artifact_A/sample_2.c
 
-      mkdir Artifact_B
-      touch Artifact_B/sample_3.c
-      touch Artifact_B/sample_4.c
+      mkdir TestCases/Artifact_B
+      touch TestCases/Artifact_B/sample_3.c
+      touch TestCases/Artifact_B/sample_4.c
 
       pwd
       ls -la
@@ -31,14 +31,14 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish test build artifact'
   inputs:
-    PathtoPublish: '$(Agent.TempDirectory)/Artifact_A'
+    PathtoPublish: '$(Build.SourcesDirectory)TestCases/Artifact_A'
     ArtifactName: 'Artifact_A'
     publishLocation: 'Container'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish test build artifact'
   inputs:
-    PathtoPublish: '$(Agent.TempDirectory)/Artifact_B'
+    PathtoPublish: '$(Build.SourcesDirectory)TestCases/Artifact_B'
     ArtifactName: 'Artifact_B'
     publishLocation: 'Container'
 
