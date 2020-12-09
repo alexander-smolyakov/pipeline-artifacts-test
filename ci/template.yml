@@ -1,14 +1,5 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 steps:
-- task: PowerShell@2
-  displayName: 'Generate files for artifacts'
-  inputs:
-    targetType: 'inline'
-    script: |
+- pwsh: |
       New-Item -ItemType Directory -Path "TestCases"
       cd TestCases
 
@@ -27,6 +18,7 @@ steps:
       New-Item -Name "sample_2.h" -ItemType "file"
       New-Item -Name "sample_3.hpp" -ItemType "file"
       New-Item -Name "sample_4.hpp" -ItemType "file"
+    displayName: 'Generate files for artifacts'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish source files'
@@ -124,12 +116,8 @@ steps:
     downloadType: 'specific'
     itemPattern: '**'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
-
-- task: PowerShell@2
+  
+- pwsh: |
+    cd "$(System.ArtifactsDirectory)"
+    Get-ChildItem -Recurse -Directory
   displayName: 'Show TestCases folder'
-  inputs:
-    targetType: 'inline'
-    script: |
-      echo "$(System.ArtifactsDirectory)"
-      cd "$(System.ArtifactsDirectory)"
-      Get-ChildItem -Recurse -Directory
