@@ -60,7 +60,7 @@ steps:
     pipeline: '21'
     buildVersionToDownload: 'latest'
     downloadType: 'single'
-    artifactName: 'testZip'
+    artifactName: 'test'
     downloadPath: '$(System.ArtifactsDirectory)'
 
 - task: DownloadBuildArtifacts@0
