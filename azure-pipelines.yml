@@ -53,6 +53,26 @@ steps:
     artifactName: 'testZip'
     downloadPath: '$(System.ArtifactsDirectory)'
 
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
+    pipeline: '21'
+    buildVersionToDownload: 'latest'
+    downloadType: 'single'
+    artifactName: 'testZip'
+    downloadPath: '$(System.ArtifactsDirectory)'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
+    pipeline: '21'
+    buildVersionToDownload: 'latest'
+    downloadType: 'specific'
+    itemPattern: '*.zip'
+    downloadPath: '$(System.ArtifactsDirectory)/pattern/'
+
 # - task: PublishPipelineArtifact@1
 #   inputs:
 #     targetPath: '$(Build.SourcesDirectory)/Example/Myartifact/'
