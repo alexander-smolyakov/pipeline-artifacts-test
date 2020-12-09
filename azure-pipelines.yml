@@ -38,7 +38,7 @@ steps:
   inputs:
     buildType: 'current'
     downloadType: 'specific'
-    itemPattern: '*.yml'
+    itemPattern: 'test/*.yml'
     downloadPath: '$(System.ArtifactsDirectory)/onlyYamlFile'
 
 # - task: ArchiveFiles@2
