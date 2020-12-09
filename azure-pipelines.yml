@@ -13,6 +13,7 @@ pool:
 
 steps:
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish test build artifact'
   inputs:
     PathtoPublish: '$(Build.SourcesDirectory)'
     ArtifactName: 'test'
@@ -20,6 +21,7 @@ steps:
 
 
 - task: DownloadBuildArtifacts@0
+  displayName: 'Download all artifact items'
   inputs:
     buildType: 'current'
     downloadType: 'single'
@@ -27,6 +29,7 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)/fullArtifact/'
 
 - task: DownloadBuildArtifacts@0
+  displayName: 'Download only *.c filles from nested folder'
   inputs:
     buildType: 'current'
     downloadType: 'single'
@@ -35,65 +38,9 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)/onlyCFiles'
 
 - task: DownloadBuildArtifacts@0
+  displayName: 'Download only *.yaml filles from nested folder'
   inputs:
     buildType: 'current'
     downloadType: 'specific'
     itemPattern: 'test/*.yml'
     downloadPath: '$(System.ArtifactsDirectory)/onlyYamlFile'
-
-# - task: ArchiveFiles@2
-#   inputs:
-#     rootFolderOrFile: '$(Build.SourcesDirectory)'
-#     includeRootFolder: false
-#     archiveType: 'zip'
-#     archiveFile: '$(Agent.TempDirectory)/$(Build.BuildId).zip'
-#     replaceExistingArchive: true
-
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     PathtoPublish: '$(Agent.TempDirectory)/$(Build.BuildId).zip'
-#     ArtifactName: 'testZip'
-#     publishLocation: 'Container'
-
-# - task: DownloadBuildArtifacts@0
-#   inputs:
-#     buildType: 'current'
-#     downloadType: 'specific'
-#     itemPattern: '*.c'
-#     downloadPath: '$(System.ArtifactsDirectory)/pattern/'
-
-# - task: DownloadBuildArtifacts@0
-#   inputs:
-#     buildType: 'specific'
-#     project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
-#     pipeline: '21'
-#     buildVersionToDownload: 'latest'
-#     downloadType: 'single'
-#     artifactName: 'test'
-#     downloadPath: '$(System.ArtifactsDirectory)'
-
-# - task: DownloadBuildArtifacts@0
-#   inputs:
-#     buildType: 'specific'
-#     project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
-#     pipeline: '21'
-#     buildVersionToDownload: 'latest'
-#     downloadType: 'single'
-#     artifactName: 'testZip'
-#     downloadPath: '$(System.ArtifactsDirectory)'
-
-# - task: DownloadBuildArtifacts@0
-#   inputs:
-#     buildType: 'specific'
-#     project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
-#     pipeline: '21'
-#     buildVersionToDownload: 'latest'
-#     downloadType: 'specific'
-#     itemPattern: '*.c'
-#     downloadPath: '$(System.ArtifactsDirectory)/pattern/'
-
-# # - task: PublishPipelineArtifact@1
-# #   inputs:
-# #     targetPath: '$(Build.SourcesDirectory)/Example/Myartifact/'
-# #     artifact: 'Myartifact - PipelineArtifact'
-# #     publishLocation: 'pipeline'
