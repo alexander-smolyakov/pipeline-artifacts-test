@@ -7,6 +7,9 @@ jobs:
     name: 'Self-hosted pool'
     demands:
     - Agent.Name -equals Agent 2
+  steps:
+  - template: ci/template.yml
+
 
 # jobs:
 # - job: 'HostedWindows'
