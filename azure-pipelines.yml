@@ -12,35 +12,54 @@ pool:
   - Agent.Name -equals Agent 2
 
 steps:
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      mkdir $(Agent.TempDirectory)/Artifact_A
+      touch $(Agent.TempDirectory)/Artifact_A/sample_1.c
+      touch $(Agent.TempDirectory)/Artifact_A/sample_2.c
+
+      mkdir $(Agent.TempDirectory)/Artifact_B
+      touch $(Agent.TempDirectory)/Artifact_B/sample_3.c
+      touch $(Agent.TempDirectory)/Artifact_B/sample_4.c
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish test build artifact'
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)'
-    ArtifactName: 'test'
+    PathtoPublish: '$(Agent.TempDirectory)/Artifact_A'
+    ArtifactName: 'Artifact_A'
     publishLocation: 'Container'
 
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish test build artifact'
+  inputs:
+    PathtoPublish: '$(Agent.TempDirectory)/Artifact_B'
+    ArtifactName: 'Artifact_B'
+    publishLocation: 'Container'
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download all artifact items'
   inputs:
     buildType: 'current'
     downloadType: 'single'
-    artifactName: 'test'
-    downloadPath: '$(System.ArtifactsDirectory)/fullArtifact/'
+    artifactName: 'Artifact_A'
+    downloadPath: '$(System.ArtifactsDirectory)/Artifact_A/'
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download only *.c filles from nested folder'
   inputs:
     buildType: 'current'
     downloadType: 'single'
-    artifactName: 'test'
-    itemPattern: 'test/Example/Myartifact/Subfolder/Ab/*.c'
-    downloadPath: '$(System.ArtifactsDirectory)/onlyCFiles'
+    artifactName: 'Artifact_B'
+    itemPattern: 'Artifact_B/*.c'
+    downloadPath: '$(System.ArtifactsDirectory)/Artifact_B/onlyCFile/'
 
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download only *.yaml filles from nested folder'
   inputs:
     buildType: 'current'
     downloadType: 'specific'
-    itemPattern: 'test/*.yml'
-    downloadPath: '$(System.ArtifactsDirectory)/onlyYamlFile'
+    itemPattern: |
+      Artifact_A/*.c
+      Artifact_B/*.c
+    downloadPath: '$(System.ArtifactsDirectory)/onlyCFile/'
