@@ -45,6 +45,11 @@ steps:
     artifactName: 'Artifact_SourceFiles'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/'
 
+- task: PowerShell@2
+  displayName: 'Verify test results'
+  inputs:
+    filePath: './script/compare_folders.ps1.ps1'
+
 # Test case #2
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/
 # The download folder should contain only *.h and *.hpp files
@@ -116,8 +121,3 @@ steps:
     downloadType: 'specific'
     itemPattern: '**'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
-  
-- task: PowerShell@2
-  inputs:
-    filePath: './script/validator.ps1'
-  displayName: 'Verify test results'
