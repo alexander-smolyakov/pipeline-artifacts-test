@@ -48,7 +48,7 @@ steps:
 - task: PowerShell@2
   displayName: 'Verify test results'
   inputs:
-    filePath: './script/compare_folders.ps1.ps1'
+    filePath: './script/compare_folders.ps1'
 
 # Test case #2
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/
