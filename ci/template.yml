@@ -140,8 +140,8 @@ steps:
       $TestCaseName = "Test Case 1 (OnlySourceFiles)"
       echo "Check relesut of $TestCaseName" 
 
-      $folderReference = -join($pathToGeneratedArtifact, "TestCases\SourceFiles"); 
-      $folderDifference = -join($pathToDownloadedArtifact, "TestCases\1_OnlySourceFiles\Artifact_SourceFiles");
+      $folderReference = -join($pathToGeneratedArtifact, "\TestCases\SourceFiles"); 
+      $folderDifference = -join($pathToDownloadedArtifact, "\TestCases\1_OnlySourceFiles\Artifact_SourceFiles");
       $CheckResult = compareFolders -folderReference $folderReference -folderDifference $folderDifference 
 
       if ($CheckResult) {
@@ -156,8 +156,8 @@ steps:
       $TestCaseName = "Test Case 2 (OnlyHeaderFiles)"
       echo "Check relesut of $TestCaseName" 
 
-      $folderReference = -join($pathToGeneratedArtifact, "TestCases\HeaderFiles");
-      $folderDifference =  -join($pathToDownloadedArtifact, "TestCases\2_OnlyHeaderFiles\Artifact_HeaderFiles");
+      $folderReference = -join($pathToGeneratedArtifact, "\TestCases\HeaderFiles");
+      $folderDifference =  -join($pathToDownloadedArtifact, "\TestCases\2_OnlyHeaderFiles\Artifact_HeaderFiles");
 
       $CheckResult = compareFolders -folderReference $folderReference -folderDifference $folderDifference 
       if ($CheckResult) {
@@ -173,7 +173,7 @@ steps:
       $CheckResult = $null;
       echo "Check relesut of $TestCaseName" 
 
-      $folder = -join($pathToDownloadedArtifact, "TestCases\3_OnlyCFiles");
+      $folder = -join($pathToDownloadedArtifact, "\TestCases\3_OnlyCFiles");
 
       $files = Get-ChildItem $folder -Recurse | where-object {-not $_.PSIsContainer} 
 
@@ -197,7 +197,7 @@ steps:
       $CheckResult = $null;
       echo "Check relesut of $TestCaseName" 
 
-      $folder = -join($pathToDownloadedArtifact, "TestCases\4_OnlyHPPFiles");
+      $folder = -join($pathToDownloadedArtifact, "\TestCases\4_OnlyHPPFiles");
 
       $files = Get-ChildItem $folder -Recurse | where-object {-not $_.PSIsContainer} 
 
@@ -221,7 +221,7 @@ steps:
       $CheckResult = $null;
       echo "Check relesut of $TestCaseName" 
 
-      $folder = -join($pathToDownloadedArtifact, "TestCases\5_CppFiles");
+      $folder = -join($pathToDownloadedArtifact, "\TestCases\5_CppFiles");
 
       $files = Get-ChildItem $folder -Recurse | where-object {-not $_.PSIsContainer} 
 
@@ -248,7 +248,7 @@ steps:
       $CheckResult = $null;
       echo "Check relesut of $TestCaseName" 
 
-      $folder = -join($pathToDownloadedArtifact, "TestCases\6_CFiles");
+      $folder = -join($pathToDownloadedArtifact, "\TestCases\6_CFiles");
       $files = Get-ChildItem $folder -Recurse | where-object {-not $_.PSIsContainer} 
 
       foreach ($file in $files){
@@ -272,8 +272,8 @@ steps:
       $TestCaseName = "Test Case 7 (AllFiles)"
       echo "Check relesut of $TestCaseName" 
 
-      $folderReference = -join($pathToGeneratedArtifact, "TestCases\");
-      $folderDifference =  -join($pathToDownloadedArtifact, "TestCases\7_AllFiles\");
+      $folderReference = -join($pathToGeneratedArtifact, "\TestCases\");
+      $folderDifference =  -join($pathToDownloadedArtifact, "\TestCases\7_AllFiles\");
 
       $CheckResult = $CheckResult = compareFolders -folderReference $folderReference -folderDifference $folderDifference
       if ($CheckResult) {
