@@ -11,7 +11,7 @@ $CheckResult = Compare-Object -ReferenceObject $FolderReferenceContents -Differe
 if ($CheckResult) {
     Write-Host Folders are differs
     Write-Host $CheckResult
-    Write-Host ##vso[task.complete result=Failed] Check failed 
+    Write-Host "##vso[task.complete result=Failed] Check failed"
 } else {
-    Write-Host ##vso[task.complete result=Succeeded;] Check passed
+    Write-Host "##vso[task.complete result=Succeeded;] Check passed"
 }
