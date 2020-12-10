@@ -38,17 +38,12 @@ steps:
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/
 # The download folder should contain only *.c and *.cpp files
 - task: DownloadBuildArtifacts@0
-  displayName: 'TestCase 1 - Download only source files'
+  displayName: 'Test Case 1 - Download only source files'
   inputs:
     buildType: 'current'
     downloadType: 'single'
     artifactName: 'Artifact_SourceFiles'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/'
-
-- task: PowerShell@2
-  displayName: 'Verify test results'
-  inputs:
-    filePath: './script/compare_folders.ps1'
 
 - task: PowerShell@2
   displayName: 'Verify results of TestCase 1'
@@ -61,7 +56,7 @@ steps:
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/
 # The download folder should contain only *.h and *.hpp files
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download only header files'
+  displayName: 'Test Case 2 - Download only header files'
   inputs:
     buildType: 'current'
     downloadType: 'single'
@@ -79,7 +74,7 @@ steps:
 # Download all *.c files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/
 # The download folder should contain only *.c files
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download only *.c files'
+  displayName: 'Test Case 3 - Download only *.c files'
   inputs:
     buildType: 'current'
     downloadType: 'single'
@@ -87,11 +82,19 @@ steps:
     itemPattern: 'Artifact_SourceFiles/*.c'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/'
 
+- task: PowerShell@2
+  displayName: 'Test Case 3 - Verify results'
+  inputs:
+    pwsh: true
+    filePath: './script/verify_files_extensions.ps1'
+    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "\TestCases\3_OnlyCFiles" -WhitelistedExtensions ".c"'
+    
+
 # Test case #4
 # Download all *.hpp files from Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/4_OnlyHPPFiles/
 # The download folder should contain only *.hpp files
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download only *.hpp files'
+  displayName: 'Test Case 4 - Download only *.hpp files'
   inputs:
     buildType: 'current'
     downloadType: 'single'
@@ -99,11 +102,18 @@ steps:
     itemPattern: 'Artifact_HeaderFiles/*.hpp'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/4_OnlyHPPFiles/'
 
+- task: PowerShell@2
+  displayName: 'Test Case 4 - Verify results'
+  inputs:
+    pwsh: true
+    filePath: './script/verify_files_extensions.ps1'
+    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "\TestCases\4_OnlyHPPFiles" -WhitelistedExtensions ".hpp"'
+
 # Test case #5
 # Download all *.cpp and *.hpp files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/5_CppFiles/
 # The download folder should contain only *.cpp and *.hpp files
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download *.cpp and *.hpp files'
+  displayName: 'Test Case 5 - Download *.cpp and *.hpp files'
   inputs:
     buildType: 'current'
     downloadType: 'specific'
@@ -112,11 +122,18 @@ steps:
       Artifact_HeaderFiles/*.hpp
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/5_CppFiles/'
 
+- task: PowerShell@2
+  displayName: 'Test Case 5 - Verify results'
+  inputs:
+    pwsh: true
+    filePath: './script/verify_files_extensions.ps1'
+    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "\TestCases\5_CppFiles" -WhitelistedExtensions "*.cpp",".hpp"'
+
 # Test case #6
 # Download all *.c and *.h files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/6_CFiles/
 # The download folder should contain only *.c and *.h files
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download *.c and *.h files'
+  displayName: 'Test Case 6 - Download *.c and *.h files'
   inputs:
     buildType: 'current'
     downloadType: 'specific'
@@ -125,11 +142,18 @@ steps:
       Artifact_HeaderFiles/*.h
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/6_CFiles/'
 
+- task: PowerShell@2
+  displayName: 'Test Case 6 - Verify results'
+  inputs:
+    pwsh: true
+    filePath: './script/verify_files_extensions.ps1'
+    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "\TestCases\6_CFiles" -WhitelistedExtensions "*.c",".h"'
+
 # Test case #7
 # Download all files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/7_AllFiles/
 # The download folder should contain all files from Artifact_SourceFiles and Artifact_HeaderFiles
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download all files'
+  displayName: 'Test Case 7 - Download all files'
   inputs:
     buildType: 'current'
     downloadType: 'specific'

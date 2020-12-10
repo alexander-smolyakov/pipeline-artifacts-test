@@ -1,5 +1,4 @@
 param ($pathToGeneratedArtifact, $pathToDownloadedArtifact, $reference, $difference);
-
 try {
     $folderReference = -join($pathToGeneratedArtifact, $reference); 
     $folderDifference = -join($pathToDownloadedArtifact, $difference);
