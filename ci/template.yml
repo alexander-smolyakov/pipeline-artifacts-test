@@ -121,8 +121,8 @@ steps:
       ##############
       ## Global variables
       ##############
-      $pathToGeneratedArtifact = $(Build.SourcesDirectory);
-      $pathToDownloadedArtifact = $(System.ArtifactsDirectory);
+      $pathToGeneratedArtifact = "$(Build.SourcesDirectory)";
+      $pathToDownloadedArtifact = "$(System.ArtifactsDirectory)";
 
       ##############
       ## Functions
