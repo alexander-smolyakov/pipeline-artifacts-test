@@ -46,7 +46,7 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/'
 
 - task: PowerShell@2
-  displayName: 'Verify results of TestCase 1'
+  displayName: 'Test Case 1 - Verify results'
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
@@ -64,7 +64,7 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/'
 
 - task: PowerShell@2
-  displayName: 'Verify results of TestCase 2'
+  displayName: 'Test Case 2 - Verify results'
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
@@ -161,7 +161,7 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
 
 - task: PowerShell@2
-  displayName: 'Verify results of TestCase 7'
+  displayName: 'Test Case 7 - Verify results of TestCase 7'
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
