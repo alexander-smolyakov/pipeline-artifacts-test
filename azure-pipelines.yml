@@ -2,7 +2,7 @@ trigger:
 - master
 
 jobs:
-- job: 'HostedWindows'
+- job: 'PrivateWindows'
   pool:
     name: 'Self-hosted pool'
     demands:
@@ -10,25 +10,24 @@ jobs:
   steps:
   - template: ci/template.yml
 
+jobs:
+- job: 'HostedWindows'
+  pool:
+    vmImage: windows-latest
+  #condition: and(succeeded())
+  steps:
+  - template: ci/template.yml
 
-# jobs:
-# - job: 'HostedWindows'
-#   pool:
-#     vmImage: windows-latest
-#   #condition: and(succeeded())
-#   steps:
-#   - template: ci/template.yml
+- job: 'HostedMacOS'
+  pool:
+    vmImage: macOS-latest
+  #condition: and(succeeded())
+  steps:
+  - template: ci/template.yml
 
-# - job: 'HostedMacOS'
-#   pool:
-#     vmImage: macOS-latest
-#   #condition: and(succeeded())
-#   steps:
-#   - template: ci/template.yml
-
-# - job: 'HostedUbuntu'
-#   pool:
-#     vmImage: ubuntu-latest
-#   #condition: and(succeeded())
-#   steps:
-#   - template: ci/template.yml
+- job: 'HostedUbuntu'
+  pool:
+    vmImage: ubuntu-latest
+  #condition: and(succeeded())
+  steps:
+  - template: ci/template.yml
