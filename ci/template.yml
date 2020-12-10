@@ -38,7 +38,7 @@ steps:
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/
 # The download folder should contain only *.c and *.cpp files
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download only source files'
+  displayName: 'TestCase 1 - Download only source files'
   inputs:
     buildType: 'current'
     downloadType: 'single'
@@ -67,6 +67,13 @@ steps:
     downloadType: 'single'
     artifactName: 'Artifact_HeaderFiles'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/'
+
+- task: PowerShell@2
+  displayName: 'Verify results of TestCase 2'
+  inputs:
+    pwsh: true
+    filePath: './script/compare_folders.ps1'
+    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "\TestCases\HeaderFiles" -difference "\TestCases\2_OnlyHeaderFiles\Artifact_HeaderFiles"'
 
 # Test case #3
 # Download all *.c files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/
@@ -128,3 +135,10 @@ steps:
     downloadType: 'specific'
     itemPattern: '**'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
+
+- task: PowerShell@2
+  displayName: 'Verify results of TestCase 7'
+  inputs:
+    pwsh: true
+    filePath: './script/compare_folders.ps1'
+    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "\TestCases\" -difference "\TestCases\7_AllFiles\"'
