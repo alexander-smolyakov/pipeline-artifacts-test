@@ -1,14 +1,11 @@
-##############
-## Global variables
-##############
-$pathToGeneratedArtifact = "$(Build.SourcesDirectory)";
-$pathToDownloadedArtifact = "$(System.ArtifactsDirectory)";
+param ($pathToGeneratedArtifact, $pathToDownloadedArtifact, $reference, $difference);
 
-$folderReference = -join($pathToGeneratedArtifact, "\TestCases\SourceFiles"); 
-$folderDifference = -join($pathToDownloadedArtifact, "\TestCases\1_OnlySourceFiles\Artifact_SourceFiles");
+$folderReference = -join($pathToGeneratedArtifact, $reference); 
+$folderDifference = -join($pathToDownloadedArtifact, $difference);
 
 $FolderReferenceContents = Get-ChildItem $folderReference -Recurse | where-object {-not $_.PSIsContainer}
 $FolderDifferenceContents = Get-ChildItem $folderDifference -Recurse | where-object {-not $_.PSIsContainer}
+
 $CheckResult = Compare-Object -ReferenceObject $FolderReferenceContents -DifferenceObject $FolderDifferenceContents -Property ('Name', 'Length');
 
 if ($CheckResult) {
@@ -18,4 +15,3 @@ if ($CheckResult) {
 } else {
     Write-Host ##vso[task.complete result=Succeeded;] Check passed
 }
-

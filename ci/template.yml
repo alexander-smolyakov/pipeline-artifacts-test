@@ -50,6 +50,12 @@ steps:
   inputs:
     filePath: './script/compare_folders.ps1'
 
+- task: PowerShell@2
+  displayName: 'Verify results of TestCase 1'
+  inputs:
+    filePath: './script/compare_folders.ps1'
+    arguments: ' -pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "(System.ArtifactsDirectory)" -reference "\TestCases\SourceFiles" -difference "\TestCases\1_OnlySourceFiles\Artifact_SourceFiles"'
+
 # Test case #2
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/
 # The download folder should contain only *.h and *.hpp files
