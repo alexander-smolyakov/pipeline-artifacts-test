@@ -1,7 +1,7 @@
 steps:
 - pwsh: |
       New-Item -ItemType Directory -Path "GeneratedArtifacts"
-      cd TestCases
+      cd GeneratedArtifacts
 
       New-Item -ItemType Directory -Path "SourceFiles"
       cd SourceFiles
