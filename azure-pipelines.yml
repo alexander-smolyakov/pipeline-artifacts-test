@@ -10,7 +10,6 @@ jobs:
   steps:
   - template: ci/template.yml
 
-jobs:
 - job: 'HostedWindows'
   pool:
     vmImage: windows-latest
