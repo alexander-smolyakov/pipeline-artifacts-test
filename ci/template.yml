@@ -53,7 +53,7 @@ steps:
   inputs:
     buildType: 'current'
     downloadType: 'single'
-    artifactName: 'Artifact_SourceFiles'
+    artifactName: 'Artifact_HeaderFiles'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/'
 
 # Test case #3
