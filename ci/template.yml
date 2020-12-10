@@ -1,6 +1,6 @@
 steps:
 - pwsh: |
-      New-Item -ItemType Directory -Path "TestCases"
+      New-Item -ItemType Directory -Path "GeneratedArtifacts"
       cd TestCases
 
       New-Item -ItemType Directory -Path "SourceFiles"
@@ -23,14 +23,14 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish source files'
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/TestCases/SourceFiles'
+    PathtoPublish: '$(Build.SourcesDirectory)/GeneratedArtifacts/SourceFiles'
     ArtifactName: 'Artifact_SourceFiles'
     publishLocation: 'Container'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish header files'
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/TestCases/HeaderFiles'
+    PathtoPublish: '$(Build.SourcesDirectory)/GeneratedArtifacts/HeaderFiles'
     ArtifactName: 'Artifact_HeaderFiles'
     publishLocation: 'Container'
 
@@ -50,7 +50,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
-    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "\TestCases\SourceFiles" -difference "\TestCases\1_OnlySourceFiles\Artifact_SourceFiles"'
+    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "\GeneratedArtifacts\SourceFiles" -difference "\TestCases\1_OnlySourceFiles\Artifact_SourceFiles"'
 
 # Test case #2
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/
@@ -68,7 +68,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
-    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "\TestCases\HeaderFiles" -difference "\TestCases\2_OnlyHeaderFiles\Artifact_HeaderFiles"'
+    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "\GeneratedArtifacts\HeaderFiles" -difference "\TestCases\2_OnlyHeaderFiles\Artifact_HeaderFiles"'
 
 # Test case #3
 # Download all *.c files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/
@@ -161,8 +161,8 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
 
 - task: PowerShell@2
-  displayName: 'Test Case 7 - Verify results of TestCase 7'
+  displayName: 'Test Case 7 - Verify results'
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
-    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "\TestCases\" -difference "\TestCases\7_AllFiles\"'
+    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "\GeneratedArtifacts\" -difference "\TestCases\7_AllFiles\"'
