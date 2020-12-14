@@ -10,7 +10,7 @@ pool:
 jobs:
 - job: CentOS6_manylinux1
   container:
-    image: quay.io/pypa/manylinux1_x86_64:2020-12-05-08e76f2
+    image: quay.io/pypa/manylinux2010_x86_64:latest
   variables:
     CXX: g++
     TILEDB_FORCE_BUILD_DEPS: ON
