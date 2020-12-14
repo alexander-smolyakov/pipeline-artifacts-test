@@ -1,168 +1,84 @@
 steps:
-- pwsh: |
-      New-Item -ItemType Directory -Path "GeneratedArtifacts"
-      cd GeneratedArtifacts
+- bash: |
+    echo "uname: " $(uname)
+    echo "uname -m: " $(uname -m)
+    echo "uname -r:" $(uname -r)
+    echo "uname -s: " $(uname -s)
+    echo "uname -v: " $(uname -v)
+    echo "whoami: " $(whoami)
+    printenv
+  displayName: 'Print env'
 
-      New-Item -ItemType Directory -Path "SourceFiles"
-      cd SourceFiles
-      New-Item -Name "sample_1.c" -ItemType "file"
-      New-Item -Name "sample_2.c" -ItemType "file"
-      New-Item -Name "sample_3.cpp" -ItemType "file"
-      New-Item -Name "sample_4.cpp" -ItemType "file"
+- bash: |
+    set -exo pipefail
+    export PATH=/opt/python/cp37-cp37m/bin:$PATH
+    pip install --user cmake==3.13.3
+    curl -L https://install.perlbrew.pl | bash
+    source $HOME/perl5/perlbrew/etc/bashrc
+    perlbrew --notest install perl-5.10.0
+- bash: |
+    export PATH=/opt/python/cp37-cp37m/bin:$PATH
+    # PATH for CMake installed above
+    export PATH=$HOME/.local/bin:$PATH
+    # azure bash does not treat intermediate failure as error
+    # https://github.com/Microsoft/azure-pipelines-yaml/issues/135
+    set -e pipefail
+    # Azure sets "SYSTEM=build" for unknown reasonas, which breaks the OpenSSL configure script
+    #   - openssl configure uses ENV{SYSTEM} if available:
+    #     https://github.com/openssl/openssl/blob/6d745d740d37d680ff696486218b650512bbbbc6/config#L56
+    #   - error description:
+    #     https://developercommunity.visualstudio.com/content/problem/602584/openssl-build-error-when-using-pipelines.htm
+    unset SYSTEM
+    # - manylinux1/gcc4.8 stuff
+    # - perlbrew to get new enough perl for OpenSSL
+    source $HOME/perl5/perlbrew/etc/bashrc
+    perlbrew use perl-5.10.0
+    export CXXFLAGS="-Wno-unused-parameter -lrt -DKJ_USE_EPOLL=0 -D__BIONIC__=1"
+    export CFLAGS="-Wno-unused-parameter -lrt -DKJ_USE_EPOLL=0 -D__BIONIC__=1"
+    # Avoid CMake EP git errors
+    git config --global user.name 'Azure Pipeline'
+    git config --global user.email 'no-reply@tiledb.io'
+    # Clone Unit-Test-Arrays
+    git clone -q https://github.com/TileDB-Inc/TileDB-Unit-Test-Arrays.git --branch 2.0.0-3 test/inputs/arrays/read_compatibility_test
+    # Set up bootstrap args
+    bootstrap_args="--enable=verbose,${TILEDB_BUILD_ENABLE}";
+    if [[ "$TILEDB_FORCE_BUILD_DEPS" == "ON" ]]; then
+      # Add superbuild flag
+      bootstrap_args="${bootstrap_args} --force-build-all-deps";
+    fi
+    mkdir -p $BUILD_REPOSITORY_LOCALPATH/build
+    cd $BUILD_REPOSITORY_LOCALPATH/build
+    # Configure and build TileDB
+    echo "Bootstrapping with '$bootstrap_args'"
+    $BUILD_REPOSITORY_LOCALPATH/bootstrap $bootstrap_args
+    make -j4
+    make examples -j4
+    make -C tiledb install
+    cd $BUILD_REPOSITORY_LOCALPATH/build
+    ls -la
+    make -j4 -C tiledb tiledb_unit
+    # Run tiledb_unit directly with native FS, and disable VFS-specific tests
+    ./tiledb/test/tiledb_unit --durations=yes --vfs native ~[azure] ~[s3]
+  displayName: 'Build and test libtiledb'
 
-      cd ..
 
-      New-Item -ItemType Directory -Path "HeaderFiles"
-      cd HeaderFiles
-      New-Item -Name "sample_1.h" -ItemType "file"
-      New-Item -Name "sample_2.h" -ItemType "file"
-      New-Item -Name "sample_3.hpp" -ItemType "file"
-      New-Item -Name "sample_4.hpp" -ItemType "file"
-  displayName: 'Generate files for artifacts'
+- bash: |
+    if [[ "$TILEDB_CI_SUCCESS" -ne 1 ]]; then
+      exit 1;
+    fi
+  displayName: 'Test status check'
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish source files'
-  inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/GeneratedArtifacts/SourceFiles'
-    ArtifactName: 'Artifact_SourceFiles'
-    publishLocation: 'Container'
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish header files'
-  inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/GeneratedArtifacts/HeaderFiles'
-    ArtifactName: 'Artifact_HeaderFiles'
-    publishLocation: 'Container'
-
-# Test case #1
-# Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/
-# The download folder should contain only *.c and *.cpp files
-- task: DownloadBuildArtifacts@0
-  displayName: 'Test Case 1 - Download only source files'
-  inputs:
-    buildType: 'current'
-    downloadType: 'single'
-    artifactName: 'Artifact_SourceFiles'
-    downloadPath: '$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/'
-
-- task: PowerShell@2
-  displayName: 'Test Case 1 - Verify results'
-  inputs:
-    pwsh: true
-    filePath: './script/compare_folders.ps1'
-    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "/GeneratedArtifacts/SourceFiles" -difference "/TestCases/1_OnlySourceFiles/Artifact_SourceFiles"'
-
-# Test case #2
-# Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/
-# The download folder should contain only *.h and *.hpp files
-- task: DownloadBuildArtifacts@0
-  displayName: 'Test Case 2 - Download only header files'
-  inputs:
-    buildType: 'current'
-    downloadType: 'single'
-    artifactName: 'Artifact_HeaderFiles'
-    downloadPath: '$(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/'
-
-- task: PowerShell@2
-  displayName: 'Test Case 2 - Verify results'
-  inputs:
-    pwsh: true
-    filePath: './script/compare_folders.ps1'
-    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "/GeneratedArtifacts/HeaderFiles" -difference "/TestCases/2_OnlyHeaderFiles/Artifact_HeaderFiles"'
-
-# Test case #3
-# Download all *.c files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/
-# The download folder should contain only *.c files
-- task: DownloadBuildArtifacts@0
-  displayName: 'Test Case 3 - Download only *.c files'
-  inputs:
-    buildType: 'current'
-    downloadType: 'single'
-    artifactName: 'Artifact_SourceFiles'
-    itemPattern: 'Artifact_SourceFiles/*.c'
-    downloadPath: '$(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/'
-
-- task: PowerShell@2
-  displayName: 'Test Case 3 - Verify results'
-  inputs:
-    pwsh: true
-    filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "/TestCases/3_OnlyCFiles" -WhitelistedExtensions ".c"'
-    
-
-# Test case #4
-# Download all *.hpp files from Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/4_OnlyHPPFiles/
-# The download folder should contain only *.hpp files
-- task: DownloadBuildArtifacts@0
-  displayName: 'Test Case 4 - Download only *.hpp files'
-  inputs:
-    buildType: 'current'
-    downloadType: 'single'
-    artifactName: 'Artifact_HeaderFiles'
-    itemPattern: 'Artifact_HeaderFiles/*.hpp'
-    downloadPath: '$(System.ArtifactsDirectory)/TestCases/4_OnlyHPPFiles/'
-
-- task: PowerShell@2
-  displayName: 'Test Case 4 - Verify results'
-  inputs:
-    pwsh: true
-    filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "/TestCases/4_OnlyHPPFiles" -WhitelistedExtensions ".hpp"'
-
-# Test case #5
-# Download all *.cpp and *.hpp files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/5_CppFiles/
-# The download folder should contain only *.cpp and *.hpp files
-- task: DownloadBuildArtifacts@0
-  displayName: 'Test Case 5 - Download *.cpp and *.hpp files'
-  inputs:
-    buildType: 'current'
-    downloadType: 'specific'
-    itemPattern: |
-      Artifact_SourceFiles/*.cpp
-      Artifact_HeaderFiles/*.hpp
-    downloadPath: '$(System.ArtifactsDirectory)/TestCases/5_CppFiles/'
-
-- task: PowerShell@2
-  displayName: 'Test Case 5 - Verify results'
-  inputs:
-    pwsh: true
-    filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "/TestCases/5_CppFiles" -WhitelistedExtensions ".cpp",".hpp"'
-
-# Test case #6
-# Download all *.c and *.h files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/6_CFiles/
-# The download folder should contain only *.c and *.h files
-- task: DownloadBuildArtifacts@0
-  displayName: 'Test Case 6 - Download *.c and *.h files'
-  inputs:
-    buildType: 'current'
-    downloadType: 'specific'
-    itemPattern: |
-      Artifact_SourceFiles/*.c
-      Artifact_HeaderFiles/*.h
-    downloadPath: '$(System.ArtifactsDirectory)/TestCases/6_CFiles/'
-
-- task: PowerShell@2
-  displayName: 'Test Case 6 - Verify results'
-  inputs:
-    pwsh: true
-    filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "/TestCases/6_CFiles" -WhitelistedExtensions ".c",".h"'
-
-# Test case #7
-# Download all files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/7_AllFiles/
-# The download folder should contain all files from Artifact_SourceFiles and Artifact_HeaderFiles
-- task: DownloadBuildArtifacts@0
-  displayName: 'Test Case 7 - Download all files'
-  inputs:
-    buildType: 'current'
-    downloadType: 'specific'
-    itemPattern: '**'
-    downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
-
-- task: PowerShell@2
-  displayName: 'Test Case 7 - Verify results'
-  inputs:
-    pwsh: true
-    filePath: './script/compare_folders.ps1'
-    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "/GeneratedArtifacts/" -difference "/TestCases/7_AllFiles"'
+- bash: |
+    set -e pipefail
+    # Display log files if the build failed
+    echo "Dumping log files for failed build"
+    echo "----------------------------------"
+    for f in $(find $BUILD_REPOSITORY_LOCALPATH/build -name *.log);
+      do echo "------"
+         echo $f
+         echo "======"
+         cat $f
+      done;
+  condition: failed() # only run this job if the build step failed
+  displayName: "Print log files (failed build only)"
