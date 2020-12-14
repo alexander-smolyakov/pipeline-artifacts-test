@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubnuntu-latest'
+  vmImage: 'ubuntu-latest'
   # name: 'Self-hosted pool'
   # demands:
   # - Agent.Name -equals Agent 2
