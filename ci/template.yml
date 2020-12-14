@@ -1,5 +1,8 @@
 steps:
 - bash: |
+    node -v
+  displayName: 'Print node version'
+- bash: |
     echo "uname: " $(uname)
     echo "uname -m: " $(uname -m)
     echo "uname -r:" $(uname -r)
