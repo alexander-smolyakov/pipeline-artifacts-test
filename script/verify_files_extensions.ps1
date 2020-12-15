@@ -1,4 +1,7 @@
+
+
 param ($pathToDownloadedArtifact, $pathToTestCase, [String[]]$WhitelistedExtensions);
+
 try {
     $isValid = $false;
     $folder = -join($pathToDownloadedArtifact, $pathToTestCase);

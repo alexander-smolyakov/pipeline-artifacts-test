@@ -2,20 +2,20 @@ trigger:
 - master
 
 jobs:
-- job: 'PrivateWindows'
-  pool:
-    name: 'Self-hosted pool'
-    demands:
-    - Agent.Name -equals Agent 2
-  steps:
-  - template: ci/template.yml
-
-# - job: 'HostedWindows'
+# - job: 'PrivateWindows'
 #   pool:
-#     vmImage: windows-latest
-#   #condition: and(succeeded())
+#     name: 'Self-hosted pool'
+#     demands:
+#     - Agent.Name -equals Agent 2
 #   steps:
 #   - template: ci/template.yml
+
+- job: 'HostedWindows'
+  pool:
+    vmImage: windows-latest
+  #condition: and(succeeded())
+  steps:
+  - template: ci/template.yml
 
 # - job: 'HostedMacOS'
 #   pool:

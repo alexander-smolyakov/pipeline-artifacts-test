@@ -1,7 +1,10 @@
-param ($pathToGeneratedArtifact, $pathToDownloadedArtifact, $reference, $difference);
+param ($folderReference, $folderDifference);
 try {
-    $folderReference = -join($pathToGeneratedArtifact, $reference); 
-    $folderDifference = -join($pathToDownloadedArtifact, $difference);
+    echo "Reference folder:"
+    Tree "$folderReference" /F | Select-Object -Skip 2 
+
+    echo "Difference folder:"
+    Tree "folderDifference" /F | Select-Object -Skip 2 
     
     $FolderReferenceContents = Get-ChildItem $folderReference -Recurse | where-object {-not $_.PSIsContainer}
     $FolderDifferenceContents = Get-ChildItem $folderDifference -Recurse | where-object {-not $_.PSIsContainer}
