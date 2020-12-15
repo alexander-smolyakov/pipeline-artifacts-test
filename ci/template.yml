@@ -50,7 +50,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
-    arguments: ' -folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/SourceFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/Artifact_SourceFiles"'
+    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/SourceFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/Artifact_SourceFiles"'
 
 # Test case #2
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/
@@ -68,7 +68,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
-    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "/GeneratedArtifacts/HeaderFiles" -difference "/TestCases/2_OnlyHeaderFiles/Artifact_HeaderFiles"'
+    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/HeaderFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/Artifact_HeaderFiles"'
 
 # Test case #3
 # Download all *.c files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/
@@ -87,7 +87,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "/TestCases/3_OnlyCFiles" -WhitelistedExtensions ".c"'
+    arguments: '-pathToTestCase "$(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles" -WhitelistedExtensions ".c"'
     
 
 # Test case #4
@@ -107,7 +107,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "/TestCases/4_OnlyHPPFiles" -WhitelistedExtensions ".hpp"'
+    arguments: '-pathToTestCase "$(System.ArtifactsDirectory)/TestCases/4_OnlyHPPFiles" -WhitelistedExtensions ".hpp"'
 
 # Test case #5
 # Download all *.cpp and *.hpp files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/5_CppFiles/
@@ -127,7 +127,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "/TestCases/5_CppFiles" -WhitelistedExtensions ".cpp",".hpp"'
+    arguments: '-pathToTestCase "$(System.ArtifactsDirectory)/TestCases/5_CppFiles" -WhitelistedExtensions ".cpp",".hpp"'
 
 # Test case #6
 # Download all *.c and *.h files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/6_CFiles/
@@ -147,7 +147,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -pathToTestCase "/TestCases/6_CFiles" -WhitelistedExtensions ".c",".h"'
+    arguments: '-pathToTestCase "$(System.ArtifactsDirectory)/TestCases/6_CFiles" -WhitelistedExtensions ".c",".h"'
 
 # Test case #7
 # Download all files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/7_AllFiles/
@@ -164,5 +164,5 @@ steps:
   displayName: 'Verify results'
   inputs:
     pwsh: true
-    filePath: './script/compare_folders.ps1'
-    arguments: '-pathToGeneratedArtifact "$(Build.SourcesDirectory)" -pathToDownloadedArtifact "$(System.ArtifactsDirectory)" -reference "/GeneratedArtifacts/" -difference "/TestCases/7_AllFiles"'
+    filePath: './script/compare_folders.ps1'    
+    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/" -folderDifference "$(System.ArtifactsDirectory)/TestCases/7_AllFiles/"'

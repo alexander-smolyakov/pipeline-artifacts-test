@@ -1,10 +1,8 @@
-
-
-param ($pathToDownloadedArtifact, $pathToTestCase, [String[]]$WhitelistedExtensions);
+param ($pathToTestCase, [String[]]$WhitelistedExtensions);
 
 try {
     $isValid = $false;
-    $folder = -join($pathToDownloadedArtifact, $pathToTestCase);
+    $folder = "$pathToTestCase";
     $files = Get-ChildItem $folder -Recurse | where-object {-not $_.PSIsContainer} 
 
     if ($files.count -eq 0) {
