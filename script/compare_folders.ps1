@@ -4,7 +4,7 @@ try {
     Tree "$folderReference" /F | Select-Object -Skip 2 
 
     echo "Difference folder:"
-    Tree "folderDifference" /F | Select-Object -Skip 2 
+    Tree "$folderDifference" /F | Select-Object -Skip 2 
     
     $FolderReferenceContents = Get-ChildItem $folderReference -Recurse | where-object {-not $_.PSIsContainer}
     $FolderDifferenceContents = Get-ChildItem $folderDifference -Recurse | where-object {-not $_.PSIsContainer}
