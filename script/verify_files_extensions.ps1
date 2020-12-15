@@ -10,6 +10,13 @@ try {
         throw "Empty file list"
     }
 
+    $files_filtered = Get-ChildItem $folder -Recurse | where-object { 
+        $WhitelistedExtensions.Contains([IO.Path]::GetExtension($_));
+    }
+
+    echo "files_filtered = $files_filtered" 
+
+
     foreach ($file in $files) {
         $extension = [IO.Path]::GetExtension($file);
         
