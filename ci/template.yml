@@ -8,7 +8,7 @@ steps:
       New-Item -Name "sample_1.c" -ItemType "file"
       New-Item -Name "sample_2.c" -ItemType "file"
       New-Item -Name "sample_3.cpp" -ItemType "file"
-      New-Item -Name "sample_4.cpp" -ItemType "file"
+      New-Item -Name "sample_4.cxx" -ItemType "file"
 
       cd ..
 
@@ -16,7 +16,7 @@ steps:
       cd HeaderFiles
       New-Item -Name "sample_1.h" -ItemType "file"
       New-Item -Name "sample_2.h" -ItemType "file"
-      New-Item -Name "sample_3.hpp" -ItemType "file"
+      New-Item -Name "sample_3.hxx" -ItemType "file"
       New-Item -Name "sample_4.hpp" -ItemType "file"
   displayName: 'Generate files for artifacts'
 
