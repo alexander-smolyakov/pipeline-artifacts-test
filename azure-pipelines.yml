@@ -8,23 +8,8 @@ pool:
   # - Agent.Name -equals Agent 2
 
 jobs:
-- job: CentOS6_manylinux2010_x86_64
-  container:
-    image: quay.io/pypa/manylinux2010_x86_64:latest
-  variables:
-    CXX: g++
-    TILEDB_FORCE_BUILD_DEPS: ON
-    TILEDB_BUILD_ENABLE: "s3,azure,serialization,static-tiledb"
-  steps:
-  - template: ./ci/template.yml
-
-- job: CentOS6_manylinux1
-  container:
-    image: quay.io/pypa/manylinux1_x86_64:2020-12-05-08e76f2
-  variables:
-    CXX: g++
-    TILEDB_FORCE_BUILD_DEPS: ON
-    TILEDB_BUILD_ENABLE: "s3,azure,serialization,static-tiledb"
+- job: WindowsContainer
+  container: mcr.microsoft.com/windows/servercore:latest
   steps:
   - template: ./ci/template.yml
 
