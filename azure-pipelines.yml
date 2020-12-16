@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 jobs:
 # - job: 'PrivateWindows'
@@ -14,7 +14,7 @@ jobs:
 #   - template: ci/template.yml
 
 - job: WindowsContainer
-  container: mcr.microsoft.com/windows/servercore:latest
+  container: ubuntu:18.04
   steps:
   - task: PowerShell@2
     displayName: Clone BuildTools repo
