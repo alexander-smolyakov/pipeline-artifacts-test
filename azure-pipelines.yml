@@ -15,7 +15,17 @@ jobs:
     vmImage: windows-latest
   #condition: and(succeeded())
   steps:
-  - template: ci/template.yml
+  - task: PowerShell@2
+    displayName: Clone BuildTools repo
+    inputs:
+      targetType: 'inline'
+      script: >
+          Set-Location -Path $($env:BUILD_SOURCEDIRECTORY)
+          & git clone -b main --depth 1 "https://github.com/s1ntaxe770r/SSH-dockerfile.git" BuildTools
+      showWarnings: true
+      pwsh: true
+      workingDirectory: '$(Build.SourcesDirectory)'
+  # - template: ci/template.yml
 
 # - job: 'HostedMacOS'
 #   pool:
