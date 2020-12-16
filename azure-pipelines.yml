@@ -10,10 +10,8 @@ jobs:
 #   steps:
 #   - template: ci/template.yml
 
-- job: 'HostedWindows'
-  pool:
-    vmImage: windows-latest
-  #condition: and(succeeded())
+- job: WindowsContainer
+  container: mcr.microsoft.com/windows/servercore:ltsc2019
   steps:
   - task: PowerShell@2
     displayName: Clone BuildTools repo
