@@ -14,7 +14,7 @@ jobs:
 #   - template: ci/template.yml
 
 - job: WindowsContainer
-  container: mcr.microsoft.com/windows/servercore:ltsc2019
+  container: mcr.microsoft.com/windows/servercore:latest
   steps:
   - task: PowerShell@2
     displayName: Clone BuildTools repo
