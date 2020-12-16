@@ -1,6 +1,9 @@
 trigger:
 - master
 
+pool:
+  vmImage: 'windows-latest'
+
 jobs:
 # - job: 'PrivateWindows'
 #   pool:
