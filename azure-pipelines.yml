@@ -6,7 +6,7 @@ jobs:
   pool:
     name: 'Self-hosted pool'
     demands:
-    - Agent.Name -equals ubuntu_test-extract-tasks
+    - Agent.Name -equals test-extract-tasks
   steps:
   - task: Bash@3
     inputs:
