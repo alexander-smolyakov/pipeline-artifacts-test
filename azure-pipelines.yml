@@ -8,29 +8,29 @@ jobs:
     demands:
     - Agent.Name -equals test-extract-tasks
   steps:
-  - task: Bash@3
-    inputs:
-      targetType: 'inline'
-      script: |
-        # Write your commands here
+  # - task: Bash@3
+  #   inputs:
+  #     targetType: 'inline'
+  #     script: |
+  #       # Write your commands here
         
-        echo 'Hello world'
-  - task: Bash@3
-    inputs:
-      targetType: 'inline'
-      script: |
-        # Write your commands here
+  #       echo 'Hello world'
+  # - task: Bash@3
+  #   inputs:
+  #     targetType: 'inline'
+  #     script: |
+  #       # Write your commands here
         
-        echo 'Hello world'
-  - task: Bash@3
-    inputs:
-      targetType: 'inline'
-      script: |
-        # Write your commands here
+  #       echo 'Hello world'
+  # - task: Bash@3
+  #   inputs:
+  #     targetType: 'inline'
+  #     script: |
+  #       # Write your commands here
         
-        echo 'Hello world'
+  #       echo 'Hello world'
 
-  # - template: ci/template.yml
+  - template: ci/template.yml
 
 # - job: 'HostedWindows'
 #   pool:
