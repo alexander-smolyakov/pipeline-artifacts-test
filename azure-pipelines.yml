@@ -5,8 +5,8 @@ jobs:
 - job: 'PrivateWindows'
   pool:
     name: 'Self-hosted pool'
-    demands:
-    - Agent.Name -equals Agent 2
+    # demands:
+    # - Agent.Name -equals Agent 2
   steps:
   # - template: ci/template.yml
   - task: Maven@3
