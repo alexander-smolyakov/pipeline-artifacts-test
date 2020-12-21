@@ -6,7 +6,7 @@ jobs:
   pool:
     name: 'Self-hosted pool'
     demands:
-    - Agent.Name -equals test-extract-tasks
+    - Agent.Name -equals ubuntu_test-extract-tasks
   steps:
   - template: ci/template.yml
 
