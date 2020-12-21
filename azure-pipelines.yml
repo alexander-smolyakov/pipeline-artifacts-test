@@ -4,7 +4,7 @@ trigger:
 pool:
     name: 'Self-hosted pool'
     demands:
-    - Agent.Name -equals test-extract-tasks
+    - Agent.Name -equals cmd_test-extract-tasks
 
 steps:
   - task: PowerShell@2
