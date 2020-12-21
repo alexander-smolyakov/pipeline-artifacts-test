@@ -5,20 +5,10 @@ jobs:
 - job: 'PrivateWindows'
   pool:
     name: 'Self-hosted pool'
-    # demands:
-    # - Agent.Name -equals Agent 2
+    demands:
+    - Agent.Name -equals test-extract-tasks
   steps:
-  # - template: ci/template.yml
-  - task: Maven@3
-    inputs:
-      mavenPomFile: 'pom.xml'
-      publishJUnitResults: true
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      javaHomeOption: 'JDKVersion'
-      mavenVersionOption: 'Default'
-      mavenAuthenticateFeed: false
-      effectivePomSkip: false
-      sonarQubeRunAnalysis: false
+  - template: ci/template.yml
 
 # - job: 'HostedWindows'
 #   pool:
