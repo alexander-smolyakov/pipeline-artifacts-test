@@ -8,7 +8,29 @@ jobs:
     demands:
     - Agent.Name -equals ubuntu_test-extract-tasks
   steps:
-  - template: ci/template.yml
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Write your commands here
+        
+        echo 'Hello world'
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Write your commands here
+        
+        echo 'Hello world'
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Write your commands here
+        
+        echo 'Hello world'
+
+  # - template: ci/template.yml
 
 # - job: 'HostedWindows'
 #   pool:
