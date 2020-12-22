@@ -27,7 +27,7 @@ try {
         throw "Extensions whitelist is empty"
     }
 
-    Write-Host "##[command]Check file in $pathToFolder by following whitelist: $whitelistedExtensions"
+    Write-Host "##[command]Check files in $pathToFolder by following whitelist: $whitelistedExtensions"
 
     $suspicious_files = Get-ChildItem "$pathToFolder" -Recurse | where-object { 
         (-not $whitelistedExtensions.Contains([IO.Path]::GetExtension($_))) -and (-not $_.PSIsContainer)
@@ -43,7 +43,7 @@ try {
         Write-Output $suspicious_files
 
         Write-Output "Content of $pathToFolder"
-        Write-Output Get-ChildItem $folderDifference -Recurse | where-object { -not $_.PSIsContainer }
+        Write-Output Get-ChildItem $folderDifference -Recurse | where-object { -not $_.PSIsContainer } -Property ('Name', 'Length', 'Directory')
 
         Write-Host "##vso[task.complete result=Failed]Test failed"
     }
