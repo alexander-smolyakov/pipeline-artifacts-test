@@ -50,7 +50,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
-    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/SourceFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/Artifact_SourceFiles"'
+    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/SourceFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/Artifact_HeaderFiles"'
 
 # Test case #2
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/
