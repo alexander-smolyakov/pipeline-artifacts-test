@@ -40,6 +40,7 @@ try {
 }
 catch {
     Write-Host "##vso[task.logissue type=error;]An error occurred: $_"
+    Write-Output "##vso[task.complete result=Failed;] Test failed"
 }
 
 exit $LASTEXITCODE
