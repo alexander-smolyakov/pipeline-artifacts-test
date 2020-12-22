@@ -37,9 +37,7 @@ try {
     }
 }
 catch {
-    Write-Host "##[error]An error occurred:"
-    Write-Host $_
-    Write-Host "##vso[task.complete result=Failed] Check failed"
+    Write-Host "##vso[task.logissue type=error;]An error occurred: $_"
 }
 
 exit $LASTEXITCODE
