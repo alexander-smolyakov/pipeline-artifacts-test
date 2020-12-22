@@ -1,47 +1,52 @@
-param ($pathToTestCase, [String[]]$WhitelistedExtensions);
+<#
+    .SYNOPSIS
+        Check files extension in the folder by the whitelist.
+    .DESCRIPTION
+        The "Download Build Artifacts" task allows us to download files from 
+        several Build Artifacts that are matched some patterns. To test this 
+        functionality we download several files with the specified extensions 
+        and this script validates the results of the download.
+#>
+
+param (
+    
+    [string]$pathToFolder, 
+    [String[]]$whitelistedExtensions
+)
 
 try {
-    $isValid = $false;
-    $folder = "$pathToTestCase";
-    $files = Get-ChildItem $folder -Recurse | where-object { -not $_.PSIsContainer } 
-
-    if ($files.count -eq 0) {
-        Write-Output "Path to the folder: $folder"
-        throw "Empty file list"
+    if ([string]::IsNullOrEmpty($pathToFolder)) {
+        throw "Path to the folder is empty"
     }
 
-    $files_filtered = Get-ChildItem $folder -Recurse | where-object { 
-        $WhitelistedExtensions.Contains([IO.Path]::GetExtension($_));
+    if (whitelistedExtensions.Count -eq 0) {
+        throw "Extensions whitelist is empty"
     }
 
-    Write-Output "files_filtered = $files_filtered" 
+    Write-Host "##[command]Check file in $pathToFolder by following whitelist: $whitelistedExtensions"
 
-
-    foreach ($file in $files) {
-        $extension = [IO.Path]::GetExtension($file);
-        
-        if ($WhitelistedExtensions.Contains($extension)) {
-            $isValid = $true;
-        }
-        else {
-            $isValid = $false;
-            Write-Host "The $extension extension is not whitelisted"
-            break;
-        }
+    $suspicious_files = Get-ChildItem "$pathToFolder" -Recurse | where-object { 
+        -Not $whitelistedExtensions.Contains([IO.Path]::GetExtension($_));
     }
 
-    if ($isValid) {
-        Write-Output "All files are passed validation"
-        Write-Output "Check passed"
+    if ($suspicious_files) {
+        Write-Host "##vso[task.logissue type=error;]The folder contains some not whitelisted items - Check failed"
+
+        Write-Output "Extensions whitelist:"
+        Write-Output $whitelistedExtensions
+
+        Write-Output "Suspicious files:"
+        Write-Output $suspicious_files
+
+        Write-Host "##vso[task.complete result=Failed]Test failed"
     }
     else {
-        Write-Host "##vso[task.complete result=Failed] Check failed"
+        Write-Output "##[section]All files are passed validation - Check passed"
     }
 }
 catch {
-    Write-Host "An error occurred:"
-    Write-Host $_
-    Write-Host "##vso[task.complete result=Failed] Check failed"
+    Write-Host "##vso[task.logissue type=error;]An error occurred: $_"
+    Write-Output "##vso[task.complete result=Failed;]Test failed"
 }
 
 exit $LASTEXITCODE

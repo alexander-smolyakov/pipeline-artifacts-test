@@ -1,23 +1,23 @@
 steps:
 - pwsh: |
-      New-Item -ItemType Directory -Path "GeneratedArtifacts"
-      cd GeneratedArtifacts
+    New-Item -ItemType Directory -Path "GeneratedArtifacts"
+    Set-Location GeneratedArtifacts
 
-      New-Item -ItemType Directory -Path "SourceFiles"
-      cd SourceFiles
-      New-Item -Name "sample_1.c" -ItemType "file"
-      New-Item -Name "sample_2.c" -ItemType "file"
-      New-Item -Name "sample_3.cpp" -ItemType "file"
-      New-Item -Name "sample_4.cxx" -ItemType "file"
+    New-Item -ItemType Directory -Path "SourceFiles"
+    Set-Location SourceFiles
+    New-Item -Name "sample_1.c" -ItemType "file"
+    New-Item -Name "sample_2.c" -ItemType "file"
+    New-Item -Name "sample_3.cpp" -ItemType "file"
+    New-Item -Name "sample_4.cpp" -ItemType "file"
 
-      cd ..
+    Set-Location ..
 
-      New-Item -ItemType Directory -Path "HeaderFiles"
-      cd HeaderFiles
-      New-Item -Name "sample_1.h" -ItemType "file"
-      New-Item -Name "sample_2.h" -ItemType "file"
-      New-Item -Name "sample_3.hxx" -ItemType "file"
-      New-Item -Name "sample_4.hpp" -ItemType "file"
+    New-Item -ItemType Directory -Path "HeaderFiles"
+    Set-Location HeaderFiles
+    New-Item -Name "sample_1.h" -ItemType "file"
+    New-Item -Name "sample_2.h" -ItemType "file"
+    New-Item -Name "sample_3.hpp" -ItemType "file"
+    New-Item -Name "sample_4.hpp" -ItemType "file"
   displayName: 'Generate files for artifacts'
 
 - task: PublishBuildArtifacts@1
@@ -50,8 +50,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
-    arguments: '-folderDifference "$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/"'
-    # arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/SourceFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/"'
+    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/SourceFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/Artifact_SourceFiles"'
 
 # Test case #2
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/

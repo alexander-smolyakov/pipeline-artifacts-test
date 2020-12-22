@@ -15,8 +15,6 @@ param (
 )
 
 try { 
-    Write-Host "##[command]Compare folder $folderReference with $folderDifference"
-
     if ([string]::IsNullOrEmpty($folderReference)) {
         throw "Path to the reference folder is empty"
     }
@@ -24,6 +22,8 @@ try {
     if ([string]::IsNullOrEmpty($folderDifference)) {
         throw "Path to the difference folder is empty"
     }
+
+    Write-Host "##[command]Compare folder $folderReference with $folderDifference"
 
     $FolderReferenceContents = Get-ChildItem $folderReference -Recurse | where-object { -not $_.PSIsContainer }
     $FolderDifferenceContents = Get-ChildItem $folderDifference -Recurse | where-object { -not $_.PSIsContainer }
@@ -50,7 +50,7 @@ try {
 }
 catch {
     Write-Host "##vso[task.logissue type=error;]An error occurred: $_"
-    Write-Output "##vso[task.complete result=Failed;] Test failed"
+    Write-Output "##vso[task.complete result=Failed;]Test failed"
 }
 
 exit $LASTEXITCODE
