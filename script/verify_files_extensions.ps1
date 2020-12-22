@@ -6,7 +6,7 @@ try {
     $files = Get-ChildItem $folder -Recurse | where-object { -not $_.PSIsContainer } 
 
     if ($files.count -eq 0) {
-        echo "Path to the folder: $folder"
+        Write-Output "Path to the folder: $folder"
         throw "Empty file list"
     }
 
@@ -14,7 +14,7 @@ try {
         $WhitelistedExtensions.Contains([IO.Path]::GetExtension($_));
     }
 
-    echo "files_filtered = $files_filtered" 
+    Write-Output "files_filtered = $files_filtered" 
 
 
     foreach ($file in $files) {
@@ -31,8 +31,8 @@ try {
     }
 
     if ($isValid) {
-        echo "All files are passed validation"
-        echo "Check passed"
+        Write-Output "All files are passed validation"
+        Write-Output "Check passed"
     }
     else {
         Write-Host "##vso[task.complete result=Failed] Check failed"

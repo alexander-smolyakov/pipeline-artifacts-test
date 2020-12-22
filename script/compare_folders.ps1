@@ -8,14 +8,22 @@
 
 param (
     # Path to the original folder
-    $folderReference, 
+    [string]$folderReference, 
     
     # Path to the downloaded folder
-    $folderDifference
+    [string]$folderDifference
 )
 
 try { 
     Write-Host "##[command]Compare folder $folderReference with $folderDifference"
+
+    if ([string]::IsNullOrEmpty($folderReference)) {
+        throw "Path to the reference folder is empty"
+    }
+
+    if ([string]::IsNullOrEmpty($folderDifference)) {
+        throw "Path to the difference folder is empty"
+    }
 
     $FolderReferenceContents = Get-ChildItem $folderReference -Recurse | where-object { -not $_.PSIsContainer }
     $FolderDifferenceContents = Get-ChildItem $folderDifference -Recurse | where-object { -not $_.PSIsContainer }
