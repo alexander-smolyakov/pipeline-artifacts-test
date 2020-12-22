@@ -9,8 +9,11 @@
 #>
 
 param (
+    # Path to the folder 
+    [string]$pathToFolder,
     
-    [string]$pathToFolder, 
+    # Array of allowed file extensions
+    # Pattern: .<extension>
     [String[]]$whitelistedExtensions
 )
 
@@ -19,7 +22,7 @@ try {
         throw "Path to the folder is empty"
     }
 
-    if (whitelistedExtensions.Count -eq 0) {
+    if ($whitelistedExtensions.Count -eq 0) {
         throw "Extensions whitelist is empty"
     }
 
