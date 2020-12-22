@@ -23,7 +23,7 @@ try {
     $CheckResult = Compare-Object -ReferenceObject $FolderReferenceContents -DifferenceObject $FolderDifferenceContents -Property ('Name', 'Length');
 
     if ($CheckResult) {
-        Write-Host "##[error]Folders are differs - Check failed"
+        Write-Host "##[task.logissue type=error;]Folders are differs - Check failed"
         Write-Host $CheckResult
 
         Write-Output "Reference folder:"
@@ -31,6 +31,8 @@ try {
 
         Write-Output "Difference folder:"
         Tree "$folderDifference" /F | Select-Object -Skip 2
+
+        Write-Output "##vso[task.complete result=Failed;] Test failed"
     }
     else {
         Write-Output "##[section]Folders are identical - Check passed"
