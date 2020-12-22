@@ -3,7 +3,7 @@ param ($pathToTestCase, [String[]]$WhitelistedExtensions);
 try {
     $isValid = $false;
     $folder = "$pathToTestCase";
-    $files = Get-ChildItem $folder -Recurse | where-object {-not $_.PSIsContainer} 
+    $files = Get-ChildItem $folder -Recurse | where-object { -not $_.PSIsContainer } 
 
     if ($files.count -eq 0) {
         echo "Path to the folder: $folder"
@@ -22,7 +22,8 @@ try {
         
         if ($WhitelistedExtensions.Contains($extension)) {
             $isValid = $true;
-        } else {
+        }
+        else {
             $isValid = $false;
             Write-Host "The $extension extension is not whitelisted"
             break;
@@ -32,10 +33,12 @@ try {
     if ($isValid) {
         echo "All files are passed validation"
         echo "Check passed"
-    } else {
+    }
+    else {
         Write-Host "##vso[task.complete result=Failed] Check failed"
     }
-} catch {
+}
+catch {
     Write-Host "An error occurred:"
     Write-Host $_
     Write-Host "##vso[task.complete result=Failed] Check failed"

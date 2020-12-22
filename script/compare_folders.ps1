@@ -1,26 +1,44 @@
-param ($folderReference, $folderDifference);
+<#
+    .SYNOPSIS
+        Compare original folder with downloaded folder.
+    .DESCRIPTION
+        To check the results of the "Download Build Artifacts" task
+        we need to validate what exactly was downloaded by the task.
+#>
+
+param (
+    # Path to the original folder
+    $folderReference, 
+    
+    # Path to the downloaded folder
+    $folderDifference
+)
+
 try { 
-    $FolderReferenceContents = Get-ChildItem $folderReference -Recurse | where-object {-not $_.PSIsContainer}
-    $FolderDifferenceContents = Get-ChildItem $folderDifference -Recurse | where-object {-not $_.PSIsContainer}
+    Write-Host "##[command] Compare folder $folderReference with $folderDifference"
+
+    $FolderReferenceContents = Get-ChildItem $folderReference -Recurse | where-object { -not $_.PSIsContainer }
+    $FolderDifferenceContents = Get-ChildItem $folderDifference -Recurse | where-object { -not $_.PSIsContainer }
 
     $CheckResult = Compare-Object -ReferenceObject $FolderReferenceContents -DifferenceObject $FolderDifferenceContents -Property ('Name', 'Length');
-    
+
     if ($CheckResult) {
-        echo "Reference folder:"
+        Write-Output "Reference folder:"
         Tree "$folderReference" /F | Select-Object -Skip 2 
-    
-        echo "Difference folder:"
+
+        Write-Output "Difference folder:"
         Tree "$folderDifference" /F | Select-Object -Skip 2 
         
         Write-Host "Folders are differs"
         Write-Host $CheckResult
-        Write-Host "##vso[task.complete result=Failed] Check failed"
-    } else {
-        echo "Folders are identical "
-        echo "Check passed"
+        Write-Host "##vso[task.logissue type=error;] Check failed"
     }
-} catch {
-    Write-Host "An error occurred:"
+    else {
+        Write-Output "##[section] Folders are identical - Check passed"
+    }
+}
+catch {
+    Write-Host "##[error] An error occurred:"
     Write-Host $_
     Write-Host "##vso[task.complete result=Failed] Check failed"
 }
