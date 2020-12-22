@@ -29,9 +29,7 @@ try {
     Write-Host "##[command]Check file in $pathToFolder by following whitelist: $whitelistedExtensions"
 
     $suspicious_files = Get-ChildItem "$pathToFolder" -Recurse | where-object { 
-        (-not $whitelistedExtensions.Contains([IO.Path]::GetExtension($_))) 
-        -and 
-        (-not $_.PSIsContainer)
+        (-not $whitelistedExtensions.Contains([IO.Path]::GetExtension($_))) -and (-not $_.PSIsContainer)
     }
 
     if ($suspicious_files) {
