@@ -87,7 +87,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToFolder "$(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles" -WhitelistedExtensions ".c"'
+    arguments: '-pathToFolder "$(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles" -whitelistedExtensions ".c"'
     
 
 # Test case #4
@@ -107,7 +107,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToFolder "$(System.ArtifactsDirectory)/TestCases/4_OnlyHPPFiles" -WhitelistedExtensions ".hpp"'
+    arguments: '-pathToFolder "$(System.ArtifactsDirectory)/TestCases/4_OnlyHPPFiles" -whitelistedExtensions ".hpp"'
 
 # Test case #5
 # Download all *.cpp and *.hpp files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/5_CppFiles/
@@ -127,7 +127,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToFolder "$(System.ArtifactsDirectory)/TestCases/5_CppFiles" -WhitelistedExtensions ".cpp",".hpp"'
+    arguments: '-pathToFolder "$(System.ArtifactsDirectory)/TestCases/5_CppFiles" -whitelistedExtensions ".cpp",".hpp"'
 
 # Test case #6
 # Download all *.c and *.h files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/6_CFiles/
@@ -147,7 +147,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToFolder "$(System.ArtifactsDirectory)/TestCases/6_CFiles" -WhitelistedExtensions ".cpp"'
+    arguments: '-pathToFolder "$(System.ArtifactsDirectory)/TestCases/6_CFiles" -whitelistedExtensions ".c",".h"'
 
 # Test case #7
 # Download all files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/7_AllFiles/
