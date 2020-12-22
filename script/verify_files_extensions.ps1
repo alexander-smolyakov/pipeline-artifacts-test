@@ -14,6 +14,7 @@ param (
     
     # Array of allowed file extensions
     # Pattern: .<extension>
+    # Example: -WhitelistedExtensions ".cpp",".hpp"
     [String[]]$whitelistedExtensions
 )
 
@@ -40,6 +41,9 @@ try {
 
         Write-Output "Suspicious files:"
         Write-Output $suspicious_files
+
+        Write-Output "Content of $pathToFolder"
+        Write-Output Get-ChildItem $folderDifference -Recurse | where-object { -not $_.PSIsContainer }
 
         Write-Host "##vso[task.complete result=Failed]Test failed"
     }

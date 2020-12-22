@@ -147,7 +147,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/verify_files_extensions.ps1'
-    arguments: '-pathToFolder "$(System.ArtifactsDirectory)/TestCases/6_CFiles" -WhitelistedExtensions ".c",".h"'
+    arguments: '-pathToFolder "$(System.ArtifactsDirectory)/TestCases/6_CFiles" -WhitelistedExtensions ".cpp"'
 
 # Test case #7
 # Download all files from Artifact_SourceFiles and Artifact_HeaderFiles to $(System.ArtifactsDirectory)/TestCases/7_AllFiles/
