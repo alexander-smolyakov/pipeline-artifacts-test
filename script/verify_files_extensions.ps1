@@ -43,7 +43,8 @@ try {
         Write-Output $suspicious_files
 
         Write-Output "Content of $pathToFolder"
-        Write-Output Get-ChildItem $folderDifference -Recurse -Name -Length | where-object { -not $_.PSIsContainer }
+        $folderContent = Get-ChildItem "$folderDifference" -Recurse -Name -Length | where-object { -not $_.PSIsContainer }
+        Write-Output $folderContent
 
         Write-Host "##vso[task.complete result=Failed]Test failed"
     }
