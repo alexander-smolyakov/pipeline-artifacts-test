@@ -50,7 +50,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
-    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/SourceFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/"'
+    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/SourceFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/"'
 
 # Test case #2
 # Download all files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/
@@ -68,7 +68,7 @@ steps:
   inputs:
     pwsh: true
     filePath: './script/compare_folders.ps1'
-    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/HeaderFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/Artifact_HeaderFiles"'
+    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/HeaderFiles" -folderDifference "$(System.ArtifactsDirectory)/TestCases/"'
 
 # Test case #3
 # Download all *.c files from Artifact_SourceFiles to $(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/
