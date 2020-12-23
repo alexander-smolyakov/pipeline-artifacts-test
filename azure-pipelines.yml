@@ -10,23 +10,23 @@ jobs:
   steps:
   - template: ci/template.yml
 
-- job: 'HostedWindows'
-  pool:
-    vmImage: windows-latest
-  #condition: and(succeeded())
-  steps:
-  - template: ci/template.yml
+# - job: 'HostedWindows'
+#   pool:
+#     vmImage: windows-latest
+#   #condition: and(succeeded())
+#   steps:
+#   - template: ci/template.yml
 
-- job: 'HostedMacOS'
-  pool:
-    vmImage: macOS-latest
-  #condition: and(succeeded())
-  steps:
-  - template: ci/template.yml
+# - job: 'HostedMacOS'
+#   pool:
+#     vmImage: macOS-latest
+#   #condition: and(succeeded())
+#   steps:
+#   - template: ci/template.yml
 
-- job: 'HostedUbuntu'
-  pool:
-    vmImage: ubuntu-latest
-  #condition: and(succeeded())
-  steps:
-  - template: ci/template.yml
+# - job: 'HostedUbuntu'
+#   pool:
+#     vmImage: ubuntu-latest
+#   #condition: and(succeeded())
+#   steps:
+#   - template: ci/template.yml
