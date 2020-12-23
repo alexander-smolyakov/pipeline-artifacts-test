@@ -17,6 +17,7 @@ jobs:
       buildVersionToDownload: 'specific'
       buildId: '552'
       downloadType: 'single'
+      artifactName: 'test'
       downloadPath: '$(System.ArtifactsDirectory)'
 
 # - job: 'HostedWindows'
