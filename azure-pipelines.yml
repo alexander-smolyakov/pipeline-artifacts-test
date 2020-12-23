@@ -19,6 +19,7 @@ jobs:
       downloadType: 'single'
       artifactName: 'test'
       downloadPath: '$(System.ArtifactsDirectory)'
+      checkDownloadedFiles: true
 
 - job: 'HostedWindows'
   pool:
@@ -36,6 +37,7 @@ jobs:
       downloadType: 'single'
       artifactName: 'test'
       downloadPath: '$(System.ArtifactsDirectory)'
+      checkDownloadedFiles: true
 
 - job: 'HostedMacOS'
   pool:
@@ -53,6 +55,7 @@ jobs:
       downloadType: 'single'
       artifactName: 'test'
       downloadPath: '$(System.ArtifactsDirectory)'
+      checkDownloadedFiles: true
 
 - job: 'HostedUbuntu'
   pool:
@@ -70,3 +73,4 @@ jobs:
       downloadType: 'single'
       artifactName: 'test'
       downloadPath: '$(System.ArtifactsDirectory)'
+      checkDownloadedFiles: true
