@@ -8,7 +8,7 @@ jobs:
     demands:
     - Agent.Name -equals Agent 2
   steps:
-  - template: ci/template.yml
+  # - template: ci/template.yml
   - task: DownloadBuildArtifacts@0
     inputs:
       buildType: 'specific'
@@ -21,56 +21,56 @@ jobs:
       downloadPath: '$(System.ArtifactsDirectory)'
       checkDownloadedFiles: true
 
-- job: 'HostedWindows'
-  pool:
-    vmImage: windows-latest
-  #condition: and(succeeded())
-  steps:
-  - template: ci/template.yml
-  - task: DownloadBuildArtifacts@0
-    inputs:
-      buildType: 'specific'
-      project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
-      pipeline: '21'
-      buildVersionToDownload: 'specific'
-      buildId: '552'
-      downloadType: 'single'
-      artifactName: 'test'
-      downloadPath: '$(System.ArtifactsDirectory)'
-      checkDownloadedFiles: true
+# - job: 'HostedWindows'
+#   pool:
+#     vmImage: windows-latest
+#   #condition: and(succeeded())
+#   steps:
+#   - template: ci/template.yml
+#   - task: DownloadBuildArtifacts@0
+#     inputs:
+#       buildType: 'specific'
+#       project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
+#       pipeline: '21'
+#       buildVersionToDownload: 'specific'
+#       buildId: '552'
+#       downloadType: 'single'
+#       artifactName: 'test'
+#       downloadPath: '$(System.ArtifactsDirectory)'
+#       checkDownloadedFiles: true
 
-- job: 'HostedMacOS'
-  pool:
-    vmImage: macOS-latest
-  #condition: and(succeeded())
-  steps:
-  - template: ci/template.yml
-  - task: DownloadBuildArtifacts@0
-    inputs:
-      buildType: 'specific'
-      project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
-      pipeline: '21'
-      buildVersionToDownload: 'specific'
-      buildId: '552'
-      downloadType: 'single'
-      artifactName: 'test'
-      downloadPath: '$(System.ArtifactsDirectory)'
-      checkDownloadedFiles: true
+# - job: 'HostedMacOS'
+#   pool:
+#     vmImage: macOS-latest
+#   #condition: and(succeeded())
+#   steps:
+#   - template: ci/template.yml
+#   - task: DownloadBuildArtifacts@0
+#     inputs:
+#       buildType: 'specific'
+#       project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
+#       pipeline: '21'
+#       buildVersionToDownload: 'specific'
+#       buildId: '552'
+#       downloadType: 'single'
+#       artifactName: 'test'
+#       downloadPath: '$(System.ArtifactsDirectory)'
+#       checkDownloadedFiles: true
 
-- job: 'HostedUbuntu'
-  pool:
-    vmImage: ubuntu-latest
-  #condition: and(succeeded())
-  steps:
-  - template: ci/template.yml
-  - task: DownloadBuildArtifacts@0
-    inputs:
-      buildType: 'specific'
-      project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
-      pipeline: '21'
-      buildVersionToDownload: 'specific'
-      buildId: '552'
-      downloadType: 'single'
-      artifactName: 'test'
-      downloadPath: '$(System.ArtifactsDirectory)'
-      checkDownloadedFiles: true
+# - job: 'HostedUbuntu'
+#   pool:
+#     vmImage: ubuntu-latest
+#   #condition: and(succeeded())
+#   steps:
+#   - template: ci/template.yml
+#   - task: DownloadBuildArtifacts@0
+#     inputs:
+#       buildType: 'specific'
+#       project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
+#       pipeline: '21'
+#       buildVersionToDownload: 'specific'
+#       buildId: '552'
+#       downloadType: 'single'
+#       artifactName: 'test'
+#       downloadPath: '$(System.ArtifactsDirectory)'
+#       checkDownloadedFiles: true
