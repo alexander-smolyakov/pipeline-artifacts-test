@@ -44,6 +44,7 @@ steps:
     downloadType: 'single'
     artifactName: 'Artifact_SourceFiles'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/1_OnlySourceFiles/'
+    checkDownloadedFiles: true
 
 - task: PowerShell@2
   displayName: 'Verify results'
@@ -62,6 +63,7 @@ steps:
     downloadType: 'single'
     artifactName: 'Artifact_HeaderFiles'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/2_OnlyHeaderFiles/'
+    checkDownloadedFiles: true
 
 - task: PowerShell@2
   displayName: 'Verify results'
@@ -81,6 +83,7 @@ steps:
     artifactName: 'Artifact_SourceFiles'
     itemPattern: 'Artifact_SourceFiles/*.c'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/3_OnlyCFiles/'
+    checkDownloadedFiles: true
 
 - task: PowerShell@2
   displayName: 'Verify results'
@@ -101,6 +104,7 @@ steps:
     artifactName: 'Artifact_HeaderFiles'
     itemPattern: 'Artifact_HeaderFiles/*.hpp'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/4_OnlyHPPFiles/'
+    checkDownloadedFiles: true
 
 - task: PowerShell@2
   displayName: 'Test Case 4 - Verify results'
@@ -121,6 +125,7 @@ steps:
       Artifact_SourceFiles/*.cpp
       Artifact_HeaderFiles/*.hpp
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/5_CppFiles/'
+    checkDownloadedFiles: true
 
 - task: PowerShell@2
   displayName: 'Verify results'
@@ -141,6 +146,7 @@ steps:
       Artifact_SourceFiles/*.c
       Artifact_HeaderFiles/*.h
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/6_CFiles/'
+    checkDownloadedFiles: true
 
 - task: PowerShell@2
   displayName: 'Verify results'
@@ -159,6 +165,7 @@ steps:
     downloadType: 'specific'
     itemPattern: '**'
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
+    checkDownloadedFiles: true
 
 - task: PowerShell@2
   displayName: 'Verify results'
