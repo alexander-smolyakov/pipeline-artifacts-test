@@ -18,7 +18,7 @@ jobs:
       buildId: '552'
       downloadType: 'single'
       artifactName: 'test'
-      itemPattern: 'test/.git/refs/remotes/origin/users/alexander-smolyakov/download-issue-repro'
+      itemPattern: 'test/.git/logs/refs/remotes/origin/users/alexander-smolyakov/download-issue-repro'
       downloadPath: '$(System.ArtifactsDirectory)'
       checkDownloadedFiles: true
 
