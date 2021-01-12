@@ -167,12 +167,12 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)/TestCases/7_AllFiles/'
     checkDownloadedFiles: true
 
-- task: PowerShell@2
-  displayName: 'Verify results'
-  inputs:
-    pwsh: true
-    filePath: './src/download-build-artifacts/validation_scripts/compare_folders.ps1'    
-    arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/" -folderDifference "$(System.ArtifactsDirectory)/TestCases/7_AllFiles/"'
+# - task: PowerShell@2
+#   displayName: 'Verify results'
+#   inputs:
+#     pwsh: true
+#     filePath: './src/download-build-artifacts/validation_scripts/compare_folders.ps1'    
+#     arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/" -folderDifference "$(System.ArtifactsDirectory)/TestCases/7_AllFiles/"'
 
 - task: PublishBuildArtifacts@1
   inputs:
