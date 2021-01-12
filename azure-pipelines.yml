@@ -25,11 +25,15 @@ jobs:
 - job: 'HostedWindows'
   pool:
     vmImage: windows-latest
+  steps:
+  - template: ci/template.yml
   #condition: and(succeeded())
 
 - job: 'HostedMacOS'
   pool:
     vmImage: macOS-latest
+  steps:
+  - template: ci/template.yml
   #condition: and(succeeded())
 
 - job: 'HostedUbuntu'
