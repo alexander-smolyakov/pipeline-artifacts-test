@@ -174,20 +174,6 @@ steps:
     filePath: './src/download-build-artifacts/validation_scripts/compare_folders.ps1'    
     arguments: '-folderReference "$(Build.SourcesDirectory)/GeneratedArtifacts/" -folderDifference "$(System.ArtifactsDirectory)/TestCases/7_AllFiles/"'
 
-
-- task: DownloadBuildArtifacts@0
-  inputs:
-    buildType: 'specific'
-    project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
-    pipeline: '21'
-    buildVersionToDownload: 'specific'
-    buildId: '552'
-    downloadType: 'single'
-    artifactName: 'test'
-    itemPattern: 
-    downloadPath: '$(System.ArtifactsDirectory)'
-    checkDownloadedFiles: true
-
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.SourcesDirectory)'
@@ -210,5 +196,18 @@ steps:
     buildVersionToDownload: 'latest'
     downloadType: 'single'
     artifactName: 'drop'
+    downloadPath: '$(System.ArtifactsDirectory)'
+    checkDownloadedFiles: true
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: '69af9ebb-49cb-4073-8269-d85b37b38e74'
+    pipeline: '21'
+    buildVersionToDownload: 'specific'
+    buildId: '552'
+    downloadType: 'single'
+    artifactName: 'test'
+    itemPattern: 
     downloadPath: '$(System.ArtifactsDirectory)'
     checkDownloadedFiles: true
